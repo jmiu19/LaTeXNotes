@@ -1,0 +1,377 @@
+\documentclass[11pt]{article}
+
+%%%%%%%%%%%%%%Include Packages%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage[a4paper, total={6in, 8in}, margin=1.25in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{rsfso}
+\usepackage{amsthm}
+\usepackage{wasysym}
+\usepackage{hyperref}
+\usepackage{tocloft}
+\usepackage{colortbl}
+\usepackage{indentfirst}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%Theorem environments%%%%%%%%%%%%%%%%%%%
+\newtheoremstyle{break}
+  {\topsep}{\topsep}%
+  {\itshape}{}%
+  {\bfseries}{}%
+  {\newline}{}%
+\theoremstyle{break}
+\theoremstyle{break}
+\newtheorem{axiom}{Axiom}
+\newtheorem{thm}{Theorem}[section]
+\renewcommand{\thethm}{\arabic{section}.\arabic{thm}}
+\newtheorem{lem}{Lemma}[thm]
+\newtheorem{defn}{Definition}[thm]
+\newenvironment{indEnv}[1][Proof]
+  {\proof[#1]\leftskip=1cm\rightskip=1cm}
+  {\endproof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%Integral%%%%%%%%%%%%%%%%%%%%%%%
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\Symm}{\text{Symm}}
+\newcommand{\Alt}{\text{Alt}}
+\newcommand{\Int}{\text{Int}}
+\newcommand{\Bd}{\text{Bd}}
+\newcommand{\Power}{\mathcal{P}}
+\newcommand{\ee}[1]{\cdot 10^{#1}}
+\newcommand{\spa}{\text{span}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\degr}{\text{deg}}
+\newcommand{\pd}{\partial}
+\newcommand{\that}[1]{\widetilde{#1}}
+\newcommand{\lr}[1]{\left(#1\right)}
+\newcommand{\vmat}[1]{\begin{vmatrix} #1 \end{vmatrix}}
+\newcommand{\bmat}[1]{\begin{bmatrix} #1 \end{bmatrix}}
+\newcommand{\pmat}[1]{\begin{pmatrix} #1 \end{pmatrix}}
+\newcommand{\rref}{\xrightarrow{\text{row\ reduce}}}
+\newcommand{\txtarrow}[1]{\xrightarrow{\text{#1}}}
+\newcommand\oast{\stackMath\mathbin{\stackinset{c}{0ex}{c}{0ex}{\ast}{\Circle}}}
+
+
+\newcommand{\note}{\color{red}Note: \color{black}}
+\newcommand{\remark}{\color{blue}Remark: \color{black}}
+\newcommand{\example}{\color{green}Example: \color{black}}
+\newcommand{\exercise}{\color{green}Exercise: \color{black}}
+
+%%%%%%%%%%%%%%%%%%%%%%Roman Number%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%Footnotes%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+	\begin{titlepage}
+		\begin{center}
+			\vspace*{0.5cm}
+			\LARGE \color{black}
+				\textbf{The Cosmological Einstein Equation \\and the $\Lambda$CDM Model}\\
+				\hfill\break
+			\vspace{0.5cm}\\
+			\Large
+				A Project Presented\\
+				 by\\
+				Jinyan Miao\\
+			
+			\vspace{1cm}
+			\includegraphics[scale=1.15]{hmm.pdf}			
+			\vspace{1cm}			
+
+			\Large \color{black}
+				Math 636 - Mathematics in General Relativity\\
+				Professor Lydia Bieri\\	
+			University of Michigan - Ann Arbor\\
+			\vspace{1cm}
+				\hfill\break
+				\Large Winter 2024\\
+
+		\vspace*{\fill}
+		\end{center}			
+	\end{titlepage}
+
+
+
+\tableofcontents
+\vspace*{\fill}
+\normalsize
+\begin{abstract}
+In this text, we discuss the use of the Friedmann–Lemaître–Robertson–Walker metric in studying our Universe. We begin by deriving the metric under the assumptions of homogeneity and isotropy. Then we introduce the Friedmann equations which describe the dynamics of the Universe. Without the cosmological constant ($\Lambda$) term in the Einstein field equation, there is no static solution to the field equation. We discuss the consequence of introducing the $\Lambda$ term in the field equation, focusing on its compatibility with the Newtonian gravitational theory. Lastly, we discuss how the Friedmann equations lead to the $\Lambda$CDM model, relating the dynamics of the Universe with the contents in the Universe. The $\Lambda$CDM model has been widely used to study the age of the Universe. 
+\end{abstract}
+
+\newpage
+\section{Friedmann–Lemaître–Robertson–Walker Metric}
+We have discussed in class some of the solutions to the  Einstein field equations
+\begin{align}
+G_{ab} = R_{ab} - \frac{1}{2}R g_{ab} = 8\pi T_{ab}\,,
+\end{align}
+in the case where $T_{ab}$ vanishes. That includes the Schwarzschild metric, 
+\begin{align}
+ds^2 = \left( 1 - \frac{r_s}{r}\right) c^2 \, dt^2 - \left( 1 - \frac{r_s}{r}\right)^{-1}\, dr^2 - r^2 \, d\Omega^2\,,
+\end{align}
+and the Kerr metric,
+\begin{align}
+ds^2 = A\left( \frac{dr^2}{B} + d\theta^2\right) - \left( 1 - \frac{2mr}{A}\right) dt^2 - \frac{4mar \sin^2(\theta)}{A}\, d\phi \, dt + \frac{2ma^2 \sin^4(\theta)}{A}\, d\phi^2\,.
+\end{align} 
+It has been shown that these metrics demonstrated intriguing causality phenomena. In this text, we will start with the Friedmann–Lemaître–Robertson–Walker metric (FLRW), having the form
+\begin{align}
+ds^2 = -d\tau^2 + (a(\tau))^2 d\Sigma^2
+\end{align}
+with $\tau$ denoting the proper time, $a$ being a function of $\tau$, and $d$ being a spacelike surface. \\
+
+Unlike the metrics that we have been discussing, the FLRW metric does not describe a black hole, instead, it is used to describe the global structure of the Universe. The FLRW metric has widely been used by cosmologists to study the dynamics of our Universe \cite{Hall, Nathalie, Kazuya, Suyu, Ishak, Valentino, Planck} and thus is the main focus of this text. The FLRW metric is derived under two main assumptions about our Universe on a very large scale - homogeneity and isotropy - which we will introduce next.\\
+
+\subsection{Homogeneity and Isotropy}
+Since the time of Copernicus, it has generally been assumed that we do not occupy a privileged position in our Universe. That is, if we were located at a different position in the Universe, the basic characteristics of our surroundings would appear the same. This defines the assumption of homogeneity about our Universe. Mathematically, a spacetime is said to be homogeneous provided that there exists a one-parameter family of spacelike hypersurfaces $\Sigma_t$ foliating the spacetime such that for each $t$ and for any points $p$, $q$ in $\Sigma_t$, there exists an isometry of the spacetime metric which takes $p$ into $q$.\\
+
+Furthermore, it is also believed that the Universe is isotropic, that is, there is no preferred direction to look into space. The observations into the Universe from different directions, on a very large scale, should yield the same result. Mathematically, a spacetime is said to be isotropic at each point provided that there exists a congruence of timelike curves (observers) with tangents $u^a$ filling the spacetime such that, given any point $p$ and any two unit vectors $s_1^a,\,s_2^a$ at $p$ orthogonal to $u^a$, there exists an isometry of $g_{ab}$ which leaves $p$ and $u^a$ at $p$ fixed but rotates $s_1^a$ into $s_2^a$. \\
+
+The two assumptions have received strong confirmation from modern cosmological observations, including the observations of distributions of galaxies, counts of radio sources, the isotropy of the X-ray and $\gamma$-ray background radiation, and the discovery of the background thermal radiation \cite{Nathalie, Wald}. For the remainder of this text, we shall proceed under the assumption that the universe is homogeneous and isotropic.\\
+
+\subsection{Derivation of the metric}
+Consider a homogeneous isotropic spacetime $(M,g)$. With the mathematical descriptions of isotropy and homogeneity, it is not hard to see that $\Sigma_t$ must be orthogonal to $u^a$, the tangents of the observers. Here we let $h_{ab}(t)$ denote the induced metric on $\Sigma_t$. By homogeneity, there exist isometries of $h_{ab}$ that take $p \in \Sigma_t$ into any $q \in \Sigma_t$, and by isotropy, it is impossible to construct geometrically preferred vectors on $\Sigma_t$. Now we consider ${}^{(3)}R_{ab}{}^{cd}$, the Riemannian curvature tensor defined on $\Sigma_t$. We see that ${}^{(3)}R_{ab}{}^{cd}$ at point $p\in \Sigma_t$ is a linear map $L$ of the vector space $W$ of two-forms at $p$ into itself, $L:W\to W$. In particular, $L$ is a self-adjoint map by the symmetry in the Riemannian tensor. Thus $W$ has an orthonormal basis of eigenvectors of $L$. If the eigenvalues of the eigenvectors are distinct, then one is possible to choose a preferred vector at $p$ which violates the isotropy assumption, so eigenvalues of $L$ must be equal. That is, we can write $L = K\mathbb{I}$ with $\mathbb{I}$ being the identity operator. In other words,
+\begin{align}
+{}^{(3)}R_{ab}{}^{cd} = K \delta^c {}_{[a} \delta^d{}_{b]}\,.
+\end{align}
+Lowering the indices we obtain
+\begin{align}
+{}^{(3)}R_{abcd} = K h_{c[a}h_{b]d}\,.
+\end{align}
+Furthermore, the requirement of homogeneity implies that $K$ is a constant on $\Sigma_t$. Thus $\Sigma_t$ is a space of constant curvature. According to Eisenhart's work in 1949, two spaces of constant curvature of the same dimension and metric signature which have equal values of $K$ must be (locally) isometric \cite{Wald}. Then to describe the possible spatial geometries of $\Sigma_t$, we only need to enumerate spaces of constant curvature encompassing all values of $K$, which are simply spaces of $3$-spheres (positive $K$), flat space ($K=0$), and hyperbolic spaces (negative $K$). We conclude here, that the metric of the spacetime has the form
+\begin{align}
+ds^2 = -d\tau^2 + (a(\tau))^2 d\Sigma^2\,,
+\end{align}
+with $d\Sigma^2$ taking the metric one of the following forms:
+\begin{align}
+dd^2 = 
+\begin{cases}
+d\psi^2 + \sin^2(\psi)(d\theta^2 + \sin^2(\theta)\, d\phi^2)\\
+dx^2 + dy^2 + dz^2 \\ 
+d\psi^2 + \sinh^2(\psi)(d\theta^2 + \sin^2(\theta) \, d\phi^2)
+\end{cases}\,,
+\end{align}
+which corresponds to the cases of spherical, flat, and hyperbolic spatial geometries, respectively. Now we have obtained the general form of the FLRW metric. Next, we shall study the dynamics of the Universe based on this metric. 
+
+\section{Friedmann Equations}
+The most general form of the stress-energy tensor that is consistent with the assumptions of homogeneity and isotropy is that describing the general perfect fluid,
+\begin{align}
+T_{ab} = \rho u_a u_b  + P(g_{ab}+u_au_b)\,,
+\end{align}
+where $\rho$ is called the density, $u_a$ is the velocity of the flow, and $P$ is called the pressure. One can combine the FLRW metric and Eq.\,(9) using Eq.\,(1). Notice that the left-hand side of Eq.\,(1) is the Einstein tensor, a symmetric 2-tensor with 10 independent components. To account for symmetries due to homogeneity and isotropy, we, in fact, have only two independent equations left, 
+\begin{align}
+G_{**} = 8\pi T_{**} = 8 \pi P\,,\qquad
+G_{\tau\tau} = 8\pi T_{\tau\tau} = 8\pi \rho\,,
+\end{align}
+where $G_{\tau\tau} = G_{ab}u^au^b$ and $G_{**} = G_{ab}s^a s^b$, with $s^a$ being any unit vector tangent to the homogeneous hypersurfaces $\Sigma_t$. Using the FLRW metric again, it is not hard to show that the two equations in Eq.\,(10) translate into 
+\begin{align}
+3\frac{\dot{a}^2}{a^2} = 8\pi \rho -3\frac{k}{a^2}\,,\qquad
+3\frac{\ddot{a}}{a} = -4\pi (\rho +3P)\,,
+\end{align}
+where $k=1$ for spherical spatial structure, $k=0$ for flat spatial structure, and $k=-1$ for hyperbolic spatial structure. The two equations in Eq.\,(11) are called the first and second Friedmann equations, and they describe the dynamics of the Universe, relating the expansion of the Universe (prescribed by $a(\tau)$) to the contents in the Universe (prescribed by $\rho$ and $P$). \\
+
+One important observation from Eq.\,(11) is that under the physical assumptions of $\rho>0$ and $P\geq 0$, the second Friedmann equation indicates that we have $\ddot{a} < 0$. That is, there is no static solution to the Einstein equation. According to Wald, Einstein was sufficiently unhappy with this prediction of a dynamic universe that he proposed a modification of his equation, the addition of a new term, leading to the cosmological Einstein equation \cite{Wald}. 
+
+\section{Cosmological Einstein Equation}
+In order to obtain a static solution from the field equation, Einstein added a new term to the field equation, 
+\begin{align}
+G_{ab} + \Lambda g_{ab} = 8\pi T_{ab}\,,
+\end{align}
+with $\Lambda$ being a fundamental constant of nature called the cosmological constant, and Eq.\,(12) is called the cosmological Einstein equation. Now one can recompute the Friedmann equations,
+\begin{align}
+\frac{3(\dot{a}^2 + k)}{a^2} - \Lambda = 8\pi \rho \,,\qquad 
+\frac{2a\ddot{a} + \dot{a}^2 + k}{a^2} - \Lambda = -8\pi p\,.
+\end{align}
+It is easy to see that a static solution to the Einstein equation exists in this case, though it requires exact adjustment of the parameters and has shown to be unstable. Combining the two equations in Eq.\,(13) we find
+\begin{align*}
+\frac{3\ddot{a}}{a} = -4\pi (\rho +3P) +\Lambda\,,
+\end{align*}
+from which we conclude that $\ddot{a} = 0$ only if $c >0$ as the quantity $\rho+3P$ is strictly positive under physical assumptions. Then with the first Friedmann equation, we see that $k= 1$ is further required for a static solution. For a dust-filled Universe, $\rho\propto a^{-3}$, it is an easy exercise to show that the static solution is unstable.\\
+
+\subsection{Compatibility with Newtonian Theory}
+In fact, the introduction of the $c$ term in the Einstein field equation has a trade-off - the field equation does not reduce to the Newtonian theory of gravitation in the quasi-stationary weak field limit. \\
+
+First we note that the Ricci tensor has the form
+\begin{align}
+R_{ab} = \pd_c \Gamma^c {}_{ba} - \pd_b \Gamma^c{}_{c a} + \Gamma^{d}{}_{ba} \Gamma^{c}{}_{c d} - \Gamma^d{}_{ca} \Gamma^{c}{}_{bd}\,.
+\end{align}
+In the quasi-stationary weak field limit, we can write the metric as
+\begin{align}
+g_{ab} = \eta_{ab}+ h_{ab}\,,
+\end{align}
+with $|h_{ab}||\ll 1$, $h_{ab}$ being almost independent of time, and $\eta_{ab}$ being the flat metric. In this limit, we can neglect the quadratic terms $\Gamma\Gamma$ in the Ricci tensor, and write
+\begin{align}
+R_{ab} \approx \pd_c \Gamma^c{}_{ab} - \pd_b \Gamma^c{}_{ca}\,.
+\end{align}
+Furthermore, as the field is assumed to be quasi-stationary, we can write
+\begin{align}
+R_{00} \approx \pd_l \Gamma^l{}_{00} \,,\qquad
+\Gamma^{l}{}_{00} \approx \frac{1}{2}\pd_l g_{00}\,.
+\end{align}
+For non-relativistic matter, $|T_{ij}|\ll |T_{00}|$, thus terms other than the $00$ term are negligible. In the Newtonian limit, 
+\begin{align}
+g_{00}\approx -(1+ 2\phi)
+\end{align}
+where $\phi$ is the gravitational potential, thus we find $R_{00} \approx \Delta \phi$. Finally, the cosmological Einstein equation leads to 
+\begin{align}
+\Delta \phi = 4\pi G \rho - \Lambda\,,
+\end{align}
+where we have restored the gravitational constant $G$. We see that Eq.\,(19) is in a form incompatible with the usual Poisson's equation in the Newtonian theory of gravitation,
+\begin{align}
+\Delta \phi = 4\pi G\rho\,.
+\end{align}
+Therefore, when $\Lambda \neq 0$, even in the weak field and slow-motion limit, we could not recover the Newtonian theory which has been very successfully predicting orbital motion on a large scale. However, if $\Lambda$ is small enough, deviations from the Newtonian theory cannot be noticed, and thus, whenever the introduction of the $\Lambda$ term is needed, one should expect $\Lambda$ to be a relatively small number. \\
+
+On a historical note, Hubble's redshift observations in 1929 demonstrated the expansion of the universe, and thus the original motivation for the introduction of the $\Lambda$ term in the field equation was lost. However, $\Lambda$ has been reintroduced many times since then when discrepancies have arisen between theory and observations, and recently, to account for dark energy \cite{Wald}.
+
+\section{Cosmological Model}
+\subsection{Expansion of the Universe}
+To obtain a better understanding of the dynamics of the Universe resulting from the theory of relativity, we take a closer look at the FLRW metric and the Friedmann equations. First we define the Hubble parameter
+\begin{align}
+H(\tau) = \frac{\dot{a}(\tau)}{a(\tau)}\,,
+\end{align}
+with $\tau$ being the proper time. From the FLRW metric, we notice that the distance scale between all isotropic observers changes with time. That is, as observed by us on the Earth, the distances between galaxies change with time, but there is no preferred center of expansion or contraction, by the assumption of homogeneity. If the distance between two isotropic observers at time $\tau$ is $R$, the rate of change of $R$ is described by the Hubble's law,
+\begin{align}
+v = \frac{dR}{d\tau} = \frac{R}{a}\frac{da}{d\tau} = HR\,.
+\end{align}
+Note that $v$ has no upper bound, and can be greater than the speed of light, while this does not contradict the fundamental tenet of the theory of relativity that \textit{nothing can travel faster than the speed of light}, because this tenet refers to the locally measured relative velocity of two objects at the same spacetime event, rather than a globally defined velocity between distant objects.\\
+
+\subsection{Age of the Universe}
+Another use of the Hubble's parameter is the measure of the age of the Universe. If the Universe has been expanding with a rate $\dot{a} > 0 $, then $a = 0$ at a time $T$ from now, estimated by
+\begin{align}
+T = \frac{a}{\dot{a}} = H^{-1}\,.
+\end{align}
+While we note that the expansion of the Universe is actually much faster at the beginning, and thus time at which $a = 0$ is closer than the value given in Eq.\,(23). As there is no natural way to extend the spacetime metric before $a = 0$, it is believed that $T$ serves as an upper bound of the age of the Universe. This gives us a motivation to find ways to estimate the Hubble parameter $H$. \\
+
+\subsection{The $\Lambda$CDM model}
+Here we consider again the Friedmann equations. Multiplying the first Friedmann equation by $a^2$, differentiating it with respect to proper time $\tau$, then eliminating the $\ddot{a}$ term using the second Friedmann equation, we obtain
+\begin{align}
+\dot{\rho} + 3(\rho +P) \frac{\dot{a}}{a} = 0\,.
+\end{align}
+This is a rather important equation that relates the contents in the Universe ($\rho$ and $P$) with the scaling factor $a$. \\
+
+For a dust-like Universe, consisting of baryonic or cold dark matter, we assume $P = 0$, then with Eq.\,(34) we obtain
+\begin{align}
+\rho_{\text{m}} \propto a^{-3}\,.
+\end{align}
+For a radiation-like Universe, consisting of the radiation only, we assume $P = \rho/3$ and obtain from Eq.\,(34), 
+\begin{align}
+\rho_{\text{rad}} \propto a^{-4}\,.
+\end{align}
+Lastly, for a Universe with only dark energy, we assume $P = w\rho$ where $w$ is the equation of state of dark energy, assumed to be time-independent. Then with Eq.\,(34) we obtain
+\begin{align}
+\rho_{\Lambda} \propto a^{-3(1+w)}\,.
+\end{align}
+Now suppose the Universe is composed of dust, radiation, and dark energy, we then can rewrite the first Friedmann equation as
+\begin{align}
+H^2 = \left( \frac{\dot{a}}{a}\right)^2 = \frac{8\pi G\rho}{3} - \frac{k}{a^2} = \frac{8\pi G}{3}\left( \sum_x \rho_x \right)  - \frac{k}{a^2}\,,
+\end{align}
+with $x$ denoting baryonic matter (b or m), cold dark matter (c), radiation (rad), or dark energy ($\Lambda$). We define the density parameter $\Omega_x$ as
+\begin{align}
+\Omega_x  = \frac{8\pi G}{3H^2}\rho_x\,.
+\end{align}
+Furthermore, we can normalize all parameters such that 
+\begin{align}
+\rho_\text{b} = \rho_{\text{b},0}a^{-3}\,,\qquad
+\rho_\text{c} = \rho_{\text{c},0}a^{-3}\,,\qquad
+\rho_{\text{rad}} = \rho_{\text{rad},0}a^{-4}\,,\qquad
+\rho_\Lambda = \rho_{\Lambda, 0}a^{-3(1+w)}\,,
+\end{align}
+with subscript $0$ denoting the current value of the quantity. Then we can compute
+\begin{align*}
+H^2 &= 
+\frac{8\pi G}{3} \left(\rho_{\text{rad},0}a^{-4} + (\rho_{c,0}+\rho_{b,0}) a^{-3}+
+\rho_{\Lambda,0}a^{-3(1+w)}\right) - \frac{k}{a^2}\\
+&= H_0^2 
+\left(\Omega_{\text{rad},0} a^{-4} +(\Omega_{c,0} +\Omega_{b,0}) a^{-3}  +
+\Omega_{\Lambda,0}a^{-3(1+w)} + 
+\Omega_{k,0}a^{-2}\right)\,.
+\tag{31}
+\end{align*}
+\setcounter{equation}{31}
+Rearranging we obtain
+\begin{align}
+H(a) = \frac{\dot{a}}{a} = H_0 \sqrt{(\Omega_\text{c} + \Omega_\text{b})a^{-3} + \Omega_{\text{rad}}a^{-4}+\Omega_{\text{k}}a^{-2} + \Omega_{\Lambda}a^{-3(1+w)} }\,,
+\end{align}
+where the subscripts $0$ in the $\Omega$'s have been dropped. Eq.\,(32) is the main result for the $\Lambda$CDM model, an equation relating the evolution of the Universe (LHS of the equation) with the precise amount of contents in each category in the Universe (RHS of the equation). In recent years, cosmologists have been using data to determine the precise value of $H_0$, $w$, and $\Omega_x$. As mentioned, Eq.\,(32) plays an important role in estimating the age of the Universe, as the model includes a single originating event, the Big Bang. One way to measure the age of the Universe using Eq.\,(32) is by considering the redshift of radiation. With the relation between the redshift parameter and the scaling factor,
+\begin{align}
+1+z = \frac{a_0}{a}\,,
+\end{align}
+we can write
+\begin{align}
+dz = -\frac{a_0}{a}\frac{\dot{a}}{a}\, dt = -(1+z) \, H(z) \, dt\,.
+\end{align}
+Thus combining with Eq.\,(32), we obtain a way to estimate the age of the Universe,
+\begin{align*}
+t_0-t
+&= \int_{t}^{t_0}dt = \int_0^z \frac{dz}{(1+z) \, H(z)} = \frac{1}{H_0}\int_0^z \frac{d\zeta}{(1+\zeta) \, H(\zeta)}\\
+&= \frac{1}{H_0}\int_0^z \frac{d\zeta}{1+\zeta} \frac{1}{\sqrt{\Omega_{\text{m}}(1-\zeta)^3 + \Omega_{\text{rad}}(1+\zeta)^4 + \Omega_{\Lambda}(1+\zeta)^{3(1+w)} + \Omega_{k}(1+\zeta)^2}}\,. \tag{35}
+\end{align*}
+The age of the Universe was estimated to be around $13.8$ Gyr in the Planck 2018 results. More estimations of the parameters $H_0$, $w$, and $\Omega_x$ are also given in their study \cite{Planck}. 
+
+
+
+\bibliography{apssamp}% Produces the bibliography via BibTeX.
+\begin{thebibliography}{10}
+\bibitem{Hall}
+M. J. Hall, \textit{General Relativity: An Introduction to Black Holes, Gravitational Waves, and Cosmology }(Morgan \& Claypool Publishers, San Rafael, CA, 2018).  
+\bibitem{Nathalie}
+N. Deruelle, and J.-P. Uzan, \textit{Relativity in Modern Physics} (Oxford Academic, Oxford, United Kingdom, 2018)
+\bibitem{Kazuya}
+K. Koyama, Rep. Prog. Phys. \textbf{79}, 046902 (2016).
+\bibitem{Suyu}
+S. H. Suyu, T.-C. Chang, F. Courbin, and T. Okumura, Space Sci. Rev. \textbf{214}, 91 (2018).
+\bibitem{Ishak}
+M. Ishak, Living Rev. Relativ. \textbf{22}, 1 (2019).
+\bibitem{Valentino}
+E. Di Valentino,  Universe \textbf{8}, 399 (2022).
+\bibitem{Planck}
+Planck Collaboration: N. Aghanim et al., \textit{Planck 2018 results. VI. Cosmological parameters}, 	arXiv:1807.06209 [astro-ph.CO] (2021). 
+\bibitem{Wald}
+R. M. Wald, \textit{General Relativity} (University of Chicago Press, Chicago, 1984). 
+\bibitem{Straumann}
+N. Straumann, \textit{General Relativity With Applications to Astrophysics} (Springer Berlin, Heidelberg, Germany, 2010).
+\bibitem{d'Inverno}
+R. d'Inverno, \textit{Introducing Einstein's Relativity} (Oxford University Press, Oxford, United Kingdom, 1990).
+\end{thebibliography}
+
+
+
+\end{document}
+
+
