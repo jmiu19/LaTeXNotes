@@ -1056,7 +1056,7 @@ with $\vec{J}$ being the probability current density,
 \psi_s^*\, \nabla \psi_s
 \right)
 \end{align*}
-Since each electron carries a scalar-valued quantum of charge, conservation of electron number is equivalent to the conservation of charge. Now we will want to incorporate the electron spin into this conservation law. Let us start by electronic spin-$z$ density
+Since each electron carries a scalar-valued quantum of charge, conservation of electron number is equivalent to the conservation of charge. Now we will want to incorporate the electron spin into a similar conservation law. Let us start by electronic spin-$z$ density
 \begin{align*}
 s_z(\vec{r}) = \frac{\hbar}{2}\left( \psi_{\uparrow}^*(\vec{r}) \,\psi_{\uparrow}(\vec{r}) - \psi_{\downarrow}^*(\vec{r})\,\psi_{\downarrow}(\vec{r})\right)\,.
 \end{align*}
@@ -1090,22 +1090,50 @@ We note here $\vec{Q}$ is tensor-valued,
 \begin{align*}
 \vec{Q} \sim \text{(Spin)}\otimes \text{(Velocity)}\,.
 \end{align*}
-Now we focus our study to the flow of spin current in a ferromagnetic material, where there is a intrinsic exchange field coupling the spin from spin current and the spin in the magnet, which gives rise to the finite magnetization in the magnet. Such an exchange field has no effect on the charge continuity equation because it does not couple to the charge degree of freedom, but it does modify the spin continuity equation,
+Now we focus our study to the flow of spin current in a ferromagnetic material layer where the magnetization $\vec{M}$ of the layer is fixed. In the ferromagnet, there is a intrinsic exchange field, produced by the magnetization $\vec{M}$, coupling the spin from spin current and the spin in the magnet. Such an exchange field has no effect on the charge continuity equation because it does not couple to the charge degree of freedom, but it does modify the spin continuity equation for the spin current,
 \begin{align*}
 \frac{\pd \vec{s}}{\pd t} = -\nabla \cdot\vec{Q} - \gamma \vec{s}\times \vec{B}_{\text{ex}}\, \tag{$\dagger$}
 \end{align*}
 with $\vec{B}_{\text{ex}}$ being the exchange field and $\vec{s}$ being the spin in the spin current flow. \\
 
-In the steady state in the ferromagnetic material, nothing varies in time and $\pd n/\pd t = 0$, $\pd\vec{s}/\pd t = 0$, we then expect to see
+In the steady state, conduction electrons are still flowing through the magnet, but the spatial profiles of the charge and spin densities (in the spin current) have settled into time-independent form, that is $\pd n/\pd t = 0$ and $\pd\vec{s}/\pd t = 0$, we then expect to see
 \begin{align*}
 \nabla \cdot \vec{J} = 0\,,\qquad\vec{J}_{\text{in}} = \vec{J}_{\text{out}}
 \end{align*}
 for the charge in the spin current, but due to ($\dagger$) we have
 \begin{align*}
 \nabla \cdot \vec{Q} = -\gamma \vec{s} \times \vec{B}_{\text{ex}}\,,\qquad
-\vec{Q}_{\text{in}}\neq \vec{Q}_{\text{out}}
+\vec{Q}_{\text{in}}\neq \vec{Q}_{\text{out}} \tag{$\ddagger$}
 \end{align*}
-for the spin in the spin current. 
+for the spin in the spin current. The changing of $\vec{Q}$ in this process is understood as having angular momentum deposited to the bulk of the magnet, as we will discuss later on. We also notice that, from the structure of ($\dagger$), the exchange field term $-\gamma \vec{s}\times \vec{B}_{\text{ex}}$ provides a torque perpendicular to the direction of $\vec{s}$. If we suppose
+\begin{align*}
+\vec{Q} \sim \vec{s}\otimes (v_x \hat{x})
+\end{align*}
+then ($\ddagger$) tells us that 
+\begin{align*}
+v_x \,\frac{d\vec{s}}{dx} \sim -\gamma \vec{s}\times \vec{B}_{\text{ex}}\,,
+\end{align*}
+from which we see that the profile $\vec{s}$ spatially precesses around the direction of $\vec{B}_{\text{ex}}$. This argument is in fact not full story yet. Realistically, the spin current incidents the 2-dimensional interface in a 3-dimensional space, so many electrons are incident on the magnetic layer
+from a variety of directions, corresponding to states from all
+parts of the Fermi surface, and therefore different electrons
+take different paths through the magnetic layer. Furthermore, the (spatial) period of the precession is very short for a typical transition metal ferromagnet, on the scale of a few atomic lattice
+spacings. Then even if all of the electrons begin with perfectly aligned spins at the interface, electrons reaching a
+given depth inside the magnet will have traveled different
+path lengths to get there. The result is classical dephasing: All components in $\vec{s}$ transverse to the direction of $\vec{B}_{ex}$ cancel due to destructive interference. On the other hand, using argument of energetics, one expects to see that spin in the spin current that is parallel to $\vec{B}_{ex}$ is likely get transmitted and spin in the spin current that is antiparallel to $\vec{B}_{ex}$ is likely to get reflected. From either perspective, the spin current coming out from the ferromagnetic layer is therefore spin polarized in the direction of $\vec{B}_{ex}$ (assuming that $\vec{n}$ has fixed direction in the ferromagnetic layer). This mechanism is detailed with toy models on \textit{Spin Transfer Torques} by D.\,C.\,Ralph and M.\,D.\,Stiles. \\
+
+Now we have investigated how the fixed magnetization $\vec{M}$ in the ferromagnet and the resulting exchange field $\vec{B}_{\text{ex}}$ exert torques on the spin current, but there should be a back torque by the spin current acting on $\vec{M}$ due to this effect. Due to conservation of total spin angular momentum in the system, the torque and back torque should be in equal magnitude but opposite directions. \\
+
+Continuing the story, if the spin polarized current now passes through a second free layer of ferromagnet, there is a torque acting on the magnetization texture $\vec{m}$ in this second layer, and such a torque is called the spin transfer torque, which is a new term that can be added to the RHS of the LLG equation (*). First we consider the limit where there is a strong exchange field between the spin current and the magnetization, with the magnetization being slowly varying in space. In this picture, the spin profile $\vec{s}(\vec{r}) $ of the spin current adjusts fast enough to align roughly with the magnetization texture such that locally we have 
+\begin{align*}
+s(\vec{r}) \sim \vec{m}(\vec{r})\,,
+\end{align*}
+in which case, in the steady state, 
+\begin{align*}
+\nabla \cdot \vec{Q} \sim (\vec{v}\cdot \nabla) \vec{m}
+\end{align*}
+is the back torque acting on the magnetization of the magnet. This is called the adiabatic term in spin transfer torque. 
+
+
 
 \section{Input-output formalism}
 
