@@ -1,0 +1,1173 @@
+\documentclass[11pt, oneside]{book}
+
+%%%%%%%%%%%%%%Include Packages%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage[a4paper, total={6in, 8in}, margin=1.25in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{paralist}
+\IfFileExists{rsfso.sty}{\usepackage{rsfso}}{}
+\usepackage{amsthm}
+\usepackage{wasysym}
+\usepackage[inline]{enumitem}   
+\usepackage{hyperref}
+\usepackage{tocloft}
+\usepackage{titlesec}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+
+
+%%%%%%%%%%%%Figure Drawings%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\newenvironment{latticefigure}
+  {\par\addvspace{\intextsep}\noindent\begin{minipage}{\linewidth}\def\@captype{figure}}
+  {\end{minipage}\par\addvspace{\intextsep}}
+\makeatother
+
+% Vector drawings of the lattice cells
+\definecolor{latticegreen}{RGB}{24,115,99}
+\definecolor{cellblue}{RGB}{49,75,148}
+\definecolor{cubeochre}{RGB}{159,111,65}
+\tikzset{
+  lattice point/.style={circle,fill=latticegreen,inner sep=1.65pt},
+  cell edge/.style={cellblue,line width=0.9pt},
+  cube edge/.style={cubeochre,line width=0.65pt},
+  primitive vector/.style={-{Stealth[length=2.2mm]},black,line width=0.9pt}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%Chapter Setting%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{gray75}{gray}{0.75}
+\newcommand{\hsp}{\hspace{20pt}}
+\titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{$\mid$}\hsp}{0pt}{\Huge\bfseries}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%Theorem environments%%%%%%%%%%%%%%%%%%%
+\newtheoremstyle{break}
+  {\topsep}{\topsep}%
+  {\itshape}{}%
+  {\bfseries}{}%
+  {\newline}{}%
+\theoremstyle{break}
+\theoremstyle{break}
+\newtheorem{axiom}{Axiom}
+\newtheorem{thm}{Theorem}[section]
+\renewcommand{\thethm}{\arabic{section}.\arabic{thm}}
+\newtheorem{lem}{Lemma}[thm]
+\newtheorem{cor}{Corollary}[thm]
+\newtheorem{defn}{Definition}[thm]
+\newenvironment{indEnv}[1][Proof]
+  {\proof[#1]\leftskip=1cm\rightskip=1cm}
+  {\endproof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%Integral%%%%%%%%%%%%%%%%%%%%%%%
+\def\upint{\mathchoice%
+    {\mkern13mu\overline{\vphantom{\intop}\mkern7mu}\mkern-20mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+    {\mkern7mu\overline{\vphantom{\intop}\mkern7mu}\mkern-14mu}%
+  \int}
+\def\lowint{\mkern3mu\underline{\vphantom{\intop}\mkern7mu}\mkern-10mu\int}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Power}{\mathcal{P}}
+\newcommand{\ee}[1]{\cdot 10^{#1}}
+\newcommand{\spa}{\text{span}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\degr}{\text{deg}}
+\newcommand{\pd}{\partial}
+\newcommand{\that}[1]{\widetilde{#1}}
+\newcommand{\lr}[1]{\left(#1\right)}
+\newcommand{\vmat}[1]{\begin{vmatrix} #1 \end{vmatrix}}
+\newcommand{\bmat}[1]{\begin{bmatrix} #1 \end{bmatrix}}
+\newcommand{\pmat}[1]{\begin{pmatrix} #1 \end{pmatrix}}
+\newcommand{\rref}{\xrightarrow{\text{row\ reduce}}}
+\newcommand{\txtarrow}[1]{\xrightarrow{\text{#1}}}
+\newcommand{\txt}{Wald's \textit{General Relativity}}
+
+\newcommand{\note}{\color{red}Note: \color{black}}
+
+
+%%%%%%%%%%%%%table of contents%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\cftchapindent}{0em}
+\cftsetindents{section}{2em}{3em}
+
+\renewcommand\cfttoctitlefont{\hfill\huge\bfseries}
+\renewcommand\cftaftertoctitle{\hfill\mbox{}}
+
+\setcounter{tocdepth}{2}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%Footnotes%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%Section%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\def\@seccntformat#1{%
+  \expandafter\ifx\csname c@#1\endcsname\c@section\else
+  \csname the#1\endcsname\quad
+  \fi}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+	\begin{titlepage}
+		\begin{center}
+			\vspace*{0.5cm}
+			\Huge \color{red}
+				\textbf{Solid State Physics}\\
+			\vspace{0.5cm}			
+			\Large \color{black}
+			\textbf{Professor Ryan Thorngren, UCLA}
+			\vspace{1.5cm}
+
+			\IfFileExists{hmm.pdf}{\includegraphics[scale=1.15]{hmm.pdf}}{\vspace*{5cm}}
+			
+			
+			\vspace{2cm}
+			\LARGE
+				\textbf{Jinyan Miao}\\
+				\hfill\break
+				\LARGE Fall 2026\\
+			\vspace{1cm}
+
+		\vspace*{\fill}
+		\end{center}			
+	\end{titlepage}
+
+
+
+\tableofcontents
+\hfill\break
+\hfill\break
+\hfill\break
+ 
+
+
+\newpage
+Roughly speaking, condensed matter physics is a study of the behavior of a system composed of many identical parts. We will study metals versus insulators, superconductivity and superfluidity, magnetism, topological phases of matter, etc. To understand these systems, before imposing identical-particle symmetry constraints, the Hilbert space we are interested in is a tensor product of individual particle Hilbert spaces, 
+\begin{align*}
+\mathcal{H}_{\text{many body}} = \bigotimes_{\text{particle }i}\mathcal{H}_{i}\,.
+\end{align*}
+Therefore, the dimension of $\mathcal{H}_{\text{many body}}$ is 
+\begin{align*}
+\dim(\mathcal{H}_{\text{many body}}) = \left(\dim(\mathcal{H}_i)\right)^N
+\end{align*}
+which is generally large.\\
+
+\section{Spatial Structure}
+[Girvin and Yang Chapter 2 - Spatial Structure]\\
+
+\noindent Let us keep in mind that the size of an atom is around $1 - 10 \,\text{\AA}$. Therefore, to probe with light, we need a light of wavelength $\lambda \approx 1 - 10\, \text{\AA}$, which is measured around $E\approx 1- 10 \,$keV, and are X-rays. Alternatively, one can also use neutrons to probe it, which has a corresponding de Broglie wavelength with energy $E \approx 0.8-80\,$meV, which are nonrelativistic. 
+
+\subsection{Semiclassical X-ray Scattering}
+First we consider the X-ray scattering of an electron, in the semi-classical language. Let $\vec{E}(\vec{x},t)$ be an electric field, $\vec{r}$ be the equilibrium position of the electron, and $\delta \vec{r}$ be its displacement from equilibrium. Here 
+\begin{align*}
+\delta\ddot{\vec{r}} = -\frac{e}{m_e} \vec{E}(\vec{r} + \delta \vec{r} , t)
+\end{align*}
+by Newton's second law, where we have assumed $v/c\ll 1$ and we are ignoring the magnetic coupling here. Let us write the electric field as a plane wave of angular frequency $\omega$ and wavevector $\vec{k}$,
+\begin{align*}
+\vec{E} = \vec{E}_{\text{in}}e^{i\vec{k}\cdot \vec{r}}e^{-i\omega t}\,.
+\end{align*}
+The electron experiences the wave and will respond by oscillating and thus there will be radiation. As long as the wavelength of $\vec{E}$ is much larger than the displacement of the electron, $|\delta \vec{r}\cdot \vec{k}|\ll 1$, then we can apply the assumption of small oscillations, such that the electron will also have a simple oscillation around $\vec{r}$ at frequency $\omega$. The oscillation of the electron gives rise to a dipole moment 
+\begin{align*}
+\vec{p}(t) = -e\,\delta \vec{r} = -\frac{e^2}{m_e \omega^2} \vec{E}_{\text{in}}e^{i\vec{k}\cdot \vec{r}}e^{-i\omega t}\,,
+\end{align*}
+and this time-dependent dipole moment is what gives the dipole radiation. Using standard E$\&$M theory in Gaussian units, in the far field limit for measuring the radiation, a detector at $\vec{R}$ such that $k|\vec{R}-\vec{r}| \gg 1$, with $k=|\vec{k}|=\omega/c$, gives
+\begin{align*}
+\vec{E}_{\text{rad}}(\vec{R},t) = \frac{e^2}{m_e c^2} \left( \hat{n}\times (\hat{n}\times \vec{E}_{\text{in}})\right)\,\frac{e^{ik|\vec{R}-\vec{r}|}}{|\vec{R} - \vec{r}|}\, e^{i\vec{k}\cdot \vec{r}-i\omega t} \,
+\end{align*}
+where 
+\begin{align*}
+\hat{n} = \frac{\vec{R}-\vec{r}}{|\vec{R}-\vec{r}|}\,.
+\end{align*}
+Let us pick the origin to be somewhere in the region where the electron is oscillating, then we can say $R=|\vec{R}| \gg |\vec{r}|$, that is 
+\begin{align*}
+|\vec{R} - \vec{r}| \approx \sqrt{R^2 - 2\vec{r}\cdot \vec{R} } = \left( 1 - \frac{\vec{r}\cdot \vec{R}}{R^2} + \cdots \right)R\,,
+\end{align*}
+thus, when the quadratic correction to the propagation phase is also negligible,
+\begin{align*}
+\frac{e^{ik|\vec{R}-\vec{r}|}}{|\vec{R} - \vec{r}|} \approx \frac{1}{R}e^{ikR - ik \vec{r}\cdot \vec{R}/R}\,,\qquad \hat{n} \approx \hat{R}\,.
+\end{align*}
+Now assembling we obtain
+\begin{align*}
+\vec{E}_{\text{rad}}(\vec{R},t)\approx \frac{e^2}{m_e c^2}\left( \hat{n}\times (\hat{n}\times \vec{E}_{\text{in}}) \right) \frac{e^{ikR}}{R}	e^{-i (k\hat{n}- \vec{k})\cdot \vec{r}}e^{-i\omega t}
+\end{align*}
+This is the pattern that we can get for one electron scattering. Here $\vec{q} = k\hat{n} - \vec{k}$ is the outgoing minus incoming photon wavevector, so the momentum transferred to the lattice is $-\hbar\vec{q}$. The outgoing photon has wavevector $k\hat{n}$ and momentum $\hbar k\hat{n}$. The process is elastic as we still have the $e^{-i\omega t}$ factor. \\
+
+Now suppose the atom that we are interested in has $Z$ electrons at locations $\vec{r}_i$ from the nucleus, then, after factoring out the common polarization, 
+\begin{align*}
+E_{\text{total rad}} \propto \sum_{i=1}^Z e^{-i\vec{q}\cdot \vec{r}_i} \coloneqq f(\vec{q})
+\end{align*}
+where $f(\vec{q})$ is called the atomic form factor. \\
+
+If we have a crystal with atoms at $\vec{R}_j$ all of the same type, and there are a total of $N$ of them, then 
+\begin{align*}
+ E_{\text{total rad}} \propto F(\vec{q}) = \sum_{j=1}^N \sum_{i=1}^Z e^{-i\vec{q}\cdot \left(\vec{R}_j + \vec{r}_i\right)} = \left(
+\sum_{j=1}^N e^{-i\vec{q}\cdot \vec{R}_j}
+\right)\left(
+\sum_{i=1}^Z e^{-i \vec{q}\cdot \vec{r}_i}
+\right)\coloneqq w(\vec{q}) \, f(\vec{q})
+\end{align*}
+where $w(\vec{q})$ is called the crystal form factor. Thus the intensity of the radiated field is proportional to $|\vec{E}|^2 \propto |f(\vec{q})|^2|w(\vec{q})|^2$. After factoring out the atomic contribution, the averaged measurements of the intensity are thus proportional to a thermal (or ensemble) average, denoted as $\langle\langle |w(\vec{q})|^2\rangle\rangle$. A lot of study investigates the correlation function interpretation of $\langle\langle |w(\vec{q})|^2\rangle\rangle$. \\
+
+\subsection{Static Structure Factor and Pair Correlations}
+Consider writing the static structure factor for $N$ atoms,
+\begin{align*}
+S(\vec{q}) = \frac{1}{N}\langle\langle |w(\vec{q})|^2\rangle\rangle &= \frac{1}{N}\langle\langle w(\vec{q})^*\, w(\vec{q}) \rangle \rangle \\
+&= \frac{1}{N}\langle \langle \sum_{i,j=1}^N e^{i\vec{q}\cdot (\vec{R}_i -\vec{R}_j)}\rangle \rangle \\
+&= 1 + \frac{1}{N}\langle \langle \sum_{i\neq j}e^{i\vec{q}\cdot (\vec{R}_i - \vec{R}_j)}\rangle\rangle\,,
+\end{align*}
+where we can apply a Fourier transform and obtain 
+\begin{align*}
+S(\vec{q}) &= 1 + \frac{1}{N} \int d^3\vec{r}\,d^3\vec{r}' \langle \langle \sum_{i\neq j}e^{i\vec{q}\cdot (\vec{r} - \vec{r}')}\,\delta (\vec{r} - \vec{R}_i) \,\delta (\vec{r}' - \vec{R}_j)\rangle\rangle \\
+&= 1 + \frac{1}{N}\int d^3 \vec{r} \, d^3\vec{r}'\, e^{i\vec{q}\cdot (\vec{r} - \vec{r}')}\langle \langle \sum_{i\neq j}\delta (\vec{r} - \vec{R}_i)\, \delta(\vec{r}' - \vec{R}_j)\rangle\rangle\,,
+\end{align*}
+where the last factor 
+\begin{align*}
+\langle \langle \sum_{i\neq j}\delta (\vec{r} - \vec{R}_i)\, \delta(\vec{r}' - \vec{R}_j)\rangle\rangle \coloneqq n^{(2)}(\vec{r}, \vec{r}')
+\end{align*}
+ is considered as a two-point distribution function. In a translation-invariant ensemble, the thermal average over all locations of the atoms has no preferred origin, which implies a translational symmetry, and thus 
+\begin{align*}
+n^{(2)}(\vec{r}, \vec{r}') = n^{(2)}(\vec{r} - \vec{r}', 0) \,.
+\end{align*}
+Now let $n = N/V$ and define
+\begin{align*}
+g(\vec{r}) = \frac{n^{(2)}(\vec{r},0)}{n^2}
+\end{align*}
+as the pair distribution function, then $
+ng(\vec{r})$ has the interpretation of number density of other particles at location $\vec{r}$, conditioned on there being a particle at $\vec{0}$. Now we can write
+\begin{align*}
+S(\vec{q}) = 1 + n \int d^3\vec{r}''\, e^{i\vec{q}\cdot \vec{r}''}g(\vec{r}'')\,,
+\end{align*}
+where $\vec{r}'' = \vec{r} - \vec{r}'$. \\
+
+%In a fluid, we expect that $g(\vec{r}) \to 1$ as $|\vec{r}| \to \infty$ such that $ng(\vec{r}) \to n$ for probability of finding a particle at any given location. 
+
+\newpage
+\subsection{Spontaneous Symmetry Breaking}
+Consider a classical Hamiltonian of $N$ particles, 
+\begin{align*}
+H = \frac{1}{2m}\sum_{i=1}^N p_i^2 + \sum_{i< j }V(|\vec{r}_i-\vec{r}_j|)\,,
+\end{align*}
+which possesses translational symmetry and rotational symmetry. Let $\langle\langle \cdot \rangle\rangle$ denote a translation-invariant thermal Gibbs ensemble of $H$, then for all $\vec{\delta}$ spatial translation, 
+\begin{align*}
+\langle\langle \rho(\vec{r}) \rangle\rangle = \langle\langle \rho(\vec{r}+\vec{\delta})\rangle\rangle
+\end{align*}
+for \begin{align*}
+\rho(\vec{r})\coloneqq \sum_{i=1}^N \delta (\vec{r} - \vec{r}_i)\,,
+\end{align*}
+thus we see $\langle\langle \rho(\vec{r})\rangle\rangle = n = N/V$. For liquids, it is expected that 
+\begin{align*}
+\langle \langle \rho(0)\, \rho(\vec{r}) \rangle\rangle \to n^2 = \langle\langle \rho(0)\rangle\rangle\,\langle\langle \rho(\vec{r}) \rangle\rangle\,
+\end{align*}
+as $|\vec{r}|\to \infty$.
+This is called clustering. However, for a translation-averaged (averaging over all possible positions of the whole crystal relative to the origin, no preferred location in the coordinate system of where we place the entire crystal) crystal with long-range density order, 
+\begin{align*}
+\langle \langle \rho(0) \,\rho(\vec{r}) \rangle\rangle - \langle \langle \rho(0) \rangle\rangle\, \langle\langle \rho(\vec{r}) \rangle\rangle = \langle \langle \rho(0) \,\rho(\vec{r}) \rangle\rangle - n^2
+\end{align*}
+has some finite oscillation as $|\vec{r}| \to \infty$, there is no clustering in $\rho(\vec{r})$. \\
+
+
+
+To understand this lack of clustering, let us distinguish averaging within one crystal from averaging over all its translated positions. We use $r$ for the spatial coordinate in the $1$-dimensional illustration, and write
+\begin{align*}
+\overline{\rho}_\theta(r) \coloneqq \langle \rho(r)\rangle_\theta
+= n+b\cos(Qr+\theta)\,,\qquad Q=\frac{2\pi}{a}\,,
+\end{align*}
+where $a$ is the lattice period, $b$ is the density modulation amplitude, and $\theta\in[0,2\pi)$ specifies the position of the crystal. Here $\langle\cdot\rangle_\theta$ is an equilibrium average with this position $\theta$ fixed; the cosine retains only the first harmonic of the periodic density.\\
+
+Within each such phase, clustering concerns fluctuations around its own periodic average. Define $\delta\rho_\theta(r)=\rho(r)-\overline{\rho}_\theta(r)$, so that $\langle\delta\rho_\theta(r)\rangle_\theta=0$. Then we have
+\begin{align*}
+C_\theta(0,r)&\coloneqq\langle\delta\rho_\theta(0)\,\delta\rho_\theta(r)\rangle_\theta =\langle\rho(0)\,\rho(r)\rangle_\theta
+-\overline{\rho}_\theta(0)\,\overline{\rho}_\theta(r)
+\longrightarrow 0\,,\qquad \text{as }|r|\to\infty\,.
+\end{align*}
+Thus measuring a local density fluctuation gives vanishing information about a sufficiently distant fluctuation. This does not remove the periodic background. More generally, a clustering phase satisfies this factorization for all local observables, not only the density.\\
+
+In the thermodynamic description, the translation-invariant Gibbs ensemble is recovered by averaging uniformly over the different positions. For any observable $O$,
+\begin{align*}
+\langle\langle O\rangle\rangle
+&=\int_0^{2\pi}\frac{d\theta}{2\pi}\,\langle O\rangle_\theta\,,\\
+\langle\langle\rho(r)\rangle\rangle
+&=\int_0^{2\pi}\frac{d\theta}{2\pi}\,[n+b\cos(Qr+\theta)]=n\,.
+\end{align*}
+However, the two densities in a two-point function share the same $\theta$. One can show that $\langle\langle\rho(0)\,\rho(r)\rangle\rangle$ is oscillatory as $|r|\to \infty$. This means that, physically, a local measurement gives information about the unknown position $\theta$ of the entire crystal. Specifying $\theta$ removes this shared uncertainty, leaving clustering fluctuations.\\
+
+Now we can identify the broken symmetry by translating one of these phases. A displacement $s$ gives
+\begin{align*}
+\overline{\rho}_\theta(r+s)
+&=n+b\cos(Qr+Qs+\theta)=\overline{\rho}_{\theta+Qs}(r)\,,\qquad
+\langle O(r+s)\rangle_\theta
+&=\langle O(r)\rangle_{\theta+2\pi s/a}\,,
+\end{align*}
+where $O(r)$ is a local observable and the second relation expresses the same translation of the phase. For general $s$, the state changes. For $s=ja$, $j\in\Z$, the phase changes by $2\pi j$ and returns to the same state. Hence discrete translations by lattice periods are unbroken, although arbitrary translations remain symmetries of the Hamiltonian.\\
+
+This is called \textit{spontaneous} symmetry breaking because the interactions produce the periodic order, while the Hamiltonian gives no preference to its position $\theta$. A boundary or arbitrarily weak perturbation can select one phase; the order persists when the perturbation is removed after taking the thermodynamic limit. The symmetric ensemble remains a valid mixture of these phases. Clustering alone does not imply broken symmetry: a homogeneous liquid also clusters.\\
+
+The possible choices can be described by a quotient space. Let $G$ be the symmetry group of the Hamiltonian and $H\subset G$ the subgroup preserving a chosen state; here the group $H$ should not be confused with the Hamiltonian. Symmetry operations differing by an element of $H$ generate the same state. For the crystal,
+\begin{align*}
+G=\R\,,\qquad H=a\Z\,,\qquad G/H=\R/(a\Z)\simeq S^1\,.
+\end{align*}
+Indeed, displacements differing by $a$ are equivalent, so positions within one period form a circle labeled by $\theta$. This is the \textit{moduli space of symmetry-breaking states}. For an isotropic Heisenberg ferromagnet, choosing a magnetization direction leaves only rotations about that direction unbroken. Thus $G=SO(3)$, $H=SO(2)$, and $G/H\simeq S^2$, the sphere of possible directions.\\
+
+
+
+
+\newpage
+We have studied X-ray scattering off of collection of atoms in the previous section: In terms of $\vec{q}=\vec{k}_{\text{out}}-\vec{k}_{\text{in}}$, the wavevector change of the photon, which corresponds to the momentum transferred to atoms, and defining
+\begin{align*}
+\that{\rho}(\vec{q}) = \sum_{j=1}^N e^{-i\vec{q}\cdot \vec{r}_j}\,,
+\end{align*}
+then the scattering intensity is proportional to $\langle\langle \that{\rho}(\vec{q}) \, \that{\rho}(-\vec{q}) \rangle\rangle/N$, which is called the static structure factor. \\
+
+Looking at this in the real space, 
+\begin{align*}
+\rho(\vec{r}) = \sum_{j=1}^N \delta(\vec{r} - \vec{r}_j)
+\end{align*}
+is an order parameter. For a translation-invariant mixture of crystalline phases, 
+\begin{align*}
+\langle\langle \rho(\vec{0})\, \rho(\vec{r})\rangle\rangle - \langle \langle \rho(\vec{0})\rangle\rangle \langle \langle \rho(\vec{r})\rangle\rangle \not\longrightarrow 0\qquad (|\vec{r}|\to\infty)\,,
+\end{align*}
+while for a fluid, we see clustering, 
+\begin{align*}
+\lim_{|\vec{r}|\to \infty}\langle\langle \rho(\vec{0})\, \rho(\vec{r})\rangle\rangle = \langle \langle \rho(\vec{0})\rangle\rangle \langle \langle \rho(\vec{r})\rangle\rangle\,.
+\end{align*}
+Even though $\langle\langle \cdot \rangle\rangle$ is translation invariant, correlations don't cluster. To make fluctuations about the periodic density cluster, we can select one crystal position and break translation symmetry, known as  spontaneous symmetry breaking. \\
+
+Suppose that we have an ideal static (a perfect $T\to 0$) 1-dimensional crystal chain, for which we can write
+\begin{align*}
+\langle \rho(r)\rangle_0 = \sum_{j=-N}^N \delta (r-aj)\,,
+\end{align*}
+the static structure factor for these $2N+1$ sites is 
+\begin{align*}
+S(q) &=\frac{1}{2N+1} \langle \that{\rho}(q) \, \that{\rho}(-q)\rangle_0= \frac{1}{2N+1}\langle \sum_{j,k= -N}^N e^{iqja - iqka}\rangle_0\,,
+\end{align*}
+taking $N$ to infinity, the sum is a Fourier transform of a Dirac comb, thus $S(q)$ is a periodic sum of delta functions, with a spike at $0$ and periodically spikes at every $2\pi/a$. From here we get the reciprocal lattice as $S(q)$ is measured in the momentum space. \\
+
+
+\subsection{Bravais Lattices and Unit Cells}
+Bravais lattice is the simplest type of lattice, which consists of equivalent points (one type of atom only), and every point is related by a crystalline translation to every other point. In $3$-dimension, we can choose $3$ independent vectors $\vec{a}_1$, $\vec{a}_2$, and $\vec{a}_3$, then 
+\begin{align*}
+\Lambda \coloneqq  \{ \sum_i n_i \vec{a}_i | n_i \in \Z\}
+\end{align*}
+is the Bravais lattice. Here we see that $\Lambda$ is a group, that is for $\vec{v},\vec{w} \in \Lambda$, we see $\vec{v}+ \vec{w} \in \Lambda$ with $-\vec{v} \in \Lambda$. In particular, $\Lambda$ is a subgroup of $\R^3$, a discrete group of unbroken translation symmetries. Every $3$-dimensional crystal has an associated Bravais lattice, with the simplest example being the one with an atom at each $\vec{v} \in \Lambda$. \\
+
+With the conventional cube edge set to one, if we pick $\vec{a}_1 = \hat{x}$, $\vec{a}_2 = \hat{y}$, and $\vec{a}_3 = \hat{z}$, then $\Lambda$ is the simple cubic lattice. The one that is slightly more difficult to visualize is the face-centered cubic lattice, which looks like a cubic lattice with an extra site at each face of the cube, the independent vectors in this case are 
+\begin{align*}
+\vec{a}_1 = \frac{\hat{x} + \hat{y}}{2} \,,\qquad
+\vec{a}_2 = \frac{\hat{y} + \hat{z}}{2} \,,\qquad
+\vec{a}_3 = \frac{\hat{z} + \hat{x}}{2} \,.
+\end{align*}
+
+Given a Bravais lattice, a primitive unit cell $C \subset \R^3$ is defined by the property that for each $\vec{x} \in \R^3$, there exists a $\vec{\lambda}\in \Lambda$ such that
+\begin{align*}
+\vec{x}\in  C + \vec{\lambda} \coloneqq \{ \vec{y} + \vec{\lambda} | \vec{y} \in C\}
+\end{align*}
+and such that if $\vec{\lambda} \neq \vec{\lambda}'$, then $(C+\vec{\lambda}) \cap (C + \vec{\lambda}')$ can intersect only along their boundaries.
+A choice of primitive vectors gives the parallelepiped
+\begin{align*}
+C=\left\{t_1\vec{a}_1+t_2\vec{a}_2+t_3\vec{a}_3
+\;\middle|\;0\leq t_i\leq 1\right\}\,.
+\end{align*}
+Its lattice translates fill space; one may assign shared boundary points to just one cell to avoid double counting. Figure~\ref{fig:cubic-cells} illustrates this construction for the two cubic lattices above, with the conventional cube edge set to one.
+
+\begin{latticefigure}
+\centering
+\begin{minipage}[t]{0.49\textwidth}
+\centering
+(a) Simple cubic\par\smallskip
+\begin{tikzpicture}[x={(1.6cm,-0.8cm)},y={(1.95cm,0.7cm)},
+  z={(0cm,2.5cm)},scale=0.88,font=\small,line join=round]
+  % The centered cube C_0 is a translated choice of primitive cell.
+  \foreach \u in {-0.5,0.5}{
+    \foreach \v in {-0.5,0.5}{
+      \draw[gray!60,densely dashed] (-0.5,\u,\v)--(0.5,\u,\v);
+      \draw[gray!60,densely dashed] (\u,-0.5,\v)--(\u,0.5,\v);
+      \draw[gray!60,densely dashed] (\u,\v,-0.5)--(\u,\v,0.5);
+    }
+  }
+  \foreach \u in {0,1}{
+    \foreach \v in {0,1}{
+      \draw[cube edge] (0,\u,\v)--(1,\u,\v);
+      \draw[cube edge] (\u,0,\v)--(\u,1,\v);
+      \draw[cube edge] (\u,\v,0)--(\u,\v,1);
+    }
+  }
+  \foreach \i in {0,1}{\foreach \j in {0,1}{\foreach \k in {0,1}{
+    \node[lattice point] at (\i,\j,\k) {};
+  }}}
+  \draw[primitive vector] (0,0,0)--(1,0,0)
+    node[midway,below left,inner sep=1pt] {$\vec a_1$};
+  \draw[primitive vector] (0,0,0)--(0,1,0)
+    node[pos=0.65,above left,inner sep=1pt] {$\vec a_2$};
+  \draw[primitive vector] (0,0,0)--(0,0,1)
+    node[pos=0.7,left,inner sep=2pt] {$\vec a_3$};
+  \node[below left,inner sep=2pt] at (0,0,0) {$0$};
+  \node[below,yshift=-3pt,fill=white,inner sep=1.5pt] at (1,0,0) {$(1,0,0)$};
+  \node[right,inner sep=3pt] at (1,1,0) {$(1,1,0)$};
+  \node[right,inner sep=3pt] at (1,1,1) {$(1,1,1)$};
+  \node[cubeochre] at (0.7,0.65,0.72) {$C$};
+  \node[gray!80!black,left] at (-0.5,-0.5,0.5) {$C_0$};
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.49\textwidth}
+\centering
+(b) Face-centered cubic\par\smallskip
+\begin{tikzpicture}[x={(2cm,-1.05cm)},y={(2.6cm,0.8cm)},
+  z={(0cm,3cm)},scale=0.95,font=\small,line join=round]
+  \coordinate (O) at (0,0,0);
+  \coordinate (A) at (0.5,0.5,0);
+  \coordinate (B) at (0,0.5,0.5);
+  \coordinate (D) at (0.5,0,0.5);
+  \coordinate (AB) at (0.5,1,0.5);
+  \coordinate (AD) at (1,0.5,0.5);
+  \coordinate (BD) at (0.5,0.5,1);
+  \coordinate (T) at (1,1,1);
+  \foreach \u in {0,1}{
+    \foreach \v in {0,1}{
+      \draw[cube edge] (0,\u,\v)--(1,\u,\v);
+      \draw[cube edge] (\u,0,\v)--(\u,1,\v);
+      \draw[cube edge] (\u,\v,0)--(\u,\v,1);
+    }
+  }
+  % Three translucent faces make the primitive rhombohedron visible.
+  \fill[cellblue,opacity=0.07] (O)--(A)--(AB)--(B)--cycle;
+  \fill[cellblue,opacity=0.09] (O)--(D)--(AD)--(A)--cycle;
+  \fill[cellblue,opacity=0.12] (A)--(AD)--(T)--(AB)--cycle;
+  \draw[cell edge] (O)--(A)--(AB)--(B)--cycle;
+  \draw[cell edge] (O)--(D)--(AD)--(A);
+  \draw[cell edge] (B)--(BD)--(D);
+  \draw[cell edge] (AB)--(T)--(AD) (T)--(BD);
+  \foreach \i in {0,1}{\foreach \j in {0,1}{\foreach \k in {0,1}{
+    \node[lattice point] at (\i,\j,\k) {};
+  }}}
+  \foreach \p in {A,B,D,AB,AD,BD}{\node[lattice point] at (\p) {};}
+  \draw[primitive vector] (O)--(A)
+    node[pos=0.62,below,inner sep=3pt] {$\vec a_1$};
+  \draw[primitive vector] (O)--(B)
+    node[pos=0.78,left,inner sep=3pt] {$\vec a_2$};
+  \draw[primitive vector] (O)--(D)
+    node[pos=0.68,right,inner sep=3pt] {$\vec a_3$};
+  \node[below left,inner sep=3pt] at (O) {$0$};
+  \node[cellblue] at (0.75,0.62,0.59) {$C$};
+\end{tikzpicture}
+\end{minipage}
+\caption{Primitive cells of the simple cubic and face-centered cubic lattices. Green dots are lattice sites and black arrows are the primitive vectors. (a) The simple cubic cell $C$ is the unit cube; the dashed cube $C_0$ is the Wigner-Seitz primitive cell centered at the origin. (b) The FCC conventional cube is drawn in brown, with a primitive rhombohedron $C$ outlined in blue.}
+\label{fig:cubic-cells}
+\end{latticefigure}
+
+For the simple cubic lattice, the three arrows follow mutually perpendicular cube edges, so $V_C=1$. The centered cell is $C_0=[-1/2,1/2]^3$, a translate of $C=[0,1]^3$; both tile space under $\Z^3$ translations. The centered choice will also be its Wigner-Seitz cell. \\
+
+For FCC, the arrows run from a corner to the centers of the three adjoining faces. They have equal length $1/\sqrt{2}$ and pairwise angle $60^\circ$, so the parallelepiped they span is a rhombohedron. Its volume is
+\begin{align*}
+V_C=\left|\vec a_1\cdot(\vec a_2\times\vec a_3)\right|=\frac14\,.
+\end{align*}
+The conventional cube contains $8(1/8)+6(1/2)=4$ lattice sites after accounting for sharing at corners and faces, whereas the primitive cell contains one. Thus we see that the FCC primitive cell occupies one quarter of the conventional cube's volume. For a conventional cube edge $a$, these volumes become $a^3$ and $a^3/4$, respectively. \\
+
+The Wigner-Seitz unit cell is the one that, for $\vec{\lambda} \in \Lambda$,
+\begin{align*}
+C_{\vec{\lambda}} = \{\vec{x} \in \R^3 | \vec{\lambda} \text{\ is a closest lattice vector to }\vec{x}\}\,.
+\end{align*}
+The wording ``a closest'' includes ties on the boundary. To construct this cell, join the chosen site to surrounding sites and draw the perpendicular bisectors (planes in three dimensions); retain the side of each bisector containing the chosen site.
+
+\begin{latticefigure}
+\centering
+\begin{tikzpicture}[x=1.6cm,y=1.6cm,font=\small,
+  line join=round,>=Stealth]
+  % Triangular lattice: a_1=(1,0), a_2=(1/2,sqrt(3)/2).
+  \filldraw[cell edge,fill=cellblue!7]
+    (0,0.577350)--(0.5,0.288675)--(0.5,-0.288675)
+    --(0,-0.577350)--(-0.5,-0.288675)--(-0.5,0.288675)--cycle;
+  \filldraw[draw=latticegreen,line width=0.9pt,fill=latticegreen!8]
+    (1.5,-0.866025)--(2.5,-0.866025)--(3,0)--(2,0)--cycle;
+  % The six nearest-neighbor bonds meet the WS edges at right angles.
+  \foreach \ang in {0,60,...,300}{
+    \draw[gray!55,densely dashed] (0,0)--(\ang:1);
+  }
+  \foreach \j in {-1,0,1}{
+    \foreach \i in {-1,0,1,2,3}{
+      \fill[black] ({\i+0.5*\j},{0.866025*\j}) circle (1.7pt);
+    }
+  }
+  \node[below left,inner sep=3pt] at (0,0) {$0$};
+  \node[cellblue,above] (wslabel) at (-1.5,0.4) {Wigner--Seitz cell};
+  \draw[primitive vector] (1.5,-0.866025)--(2.5,-0.866025)
+    node[midway,below,inner sep=4pt] {$\vec a_1$};
+  \draw[primitive vector] (1.5,-0.866025)--(2,0)
+    node[midway,left,inner sep=4pt] {$\vec a_2$};
+  \node[latticegreen,below] at (2.5,0.5) {primitive cell formed by $\vec{a}_i$};
+\end{tikzpicture}
+\caption{Two primitive cells of the same two-dimensional triangular lattice. The blue hexagon consists of points closest to its central site; its six sides bisect the dashed nearest-neighbor bonds. The green parallelogram is spanned by two primitive vectors. Translating either cell by lattice vectors tiles the plane.}
+\label{fig:triangular-wigner-seitz}
+\end{latticefigure}
+
+For Figure~\ref{fig:triangular-wigner-seitz}, take
+\begin{align*}
+\vec a_1=a(1,0)\,,\qquad \vec a_2=a\left(\frac12,\frac{\sqrt3}{2}\right)\,,
+\end{align*}
+where $a$ is the nearest-neighbor spacing. The six nearest neighbors surround the origin at angles separated by $60^\circ$; their perpendicular bisectors enclose a regular hexagon with apothem $a/2$ and side length $a/\sqrt3$. Thus
+\begin{align*}
+A_{\mathrm{WS}}=6\left(\frac12\frac{a}{\sqrt3}\frac a2\right)
+=\frac{\sqrt3}{2}a^2
+=\left|\det(\vec a_1,\vec a_2)\right|
+=A_{\mathrm{parallelogram}}\,.
+\end{align*}
+The equal areas express that each cell accounts for one lattice site: the hexagon contains one site in its interior, while the corner contributions of the parallelogram add up to one. The hexagon's vertices are not additional lattice sites. Thus the primitive cell is not unique, while the Wigner-Seitz choice makes the lattice's sixfold rotational symmetry visible. \\
+
+The hexagonal honeycomb lattice is not a Bravais lattice, but it has repeated pattern and symmetry, and thus it has an associated Bravais lattice, formed by $2$ independent vectors, which originate from the geometric center of one of the hexagons and connect to the nearest centers in linearly independent directions. \\
+
+
+For a given arrangement of atoms with unbroken symmetry $\Lambda$ and with a choice of primitive unit cell, there is a list of vectors $\vec{R}_i$ for $i = 1,2,\cdots, m$ where $m$ is the number of atoms per primitive cell such that every atom, with a fixed convention for cell boundaries, is uniquely labeled by a pair $\vec{\lambda}\in \Lambda$ and an $\vec{R}_i$ via $\vec{R} = \vec{\lambda} + \vec{R}_i$. \\
+
+We have understood $\Lambda$ as a group of unbroken translation symmetries, but for the structure of the lattice, we can also have other unbroken symmetries, such as the rotational, reflection-plane, and inversion symmetry. These three are called the point symmetries, where we see a fixed  point when performing symmetry transformation.
+Together with lattice translations, they generate a symmorphic group if they share a fixed origin. There are other symmetries that are nonsymmorphic, such as screw rotations and glide reflections. In $3$-dimensions, Bravais lattices have  symmorphic full symmetry groups, with a total of $14$ lattice types. While general crystals have $230$ possible space-group types. All of the unbroken symmetries form the space group, one of these $230$ types. \\
+
+\subsection{Reciprocal Lattice and Brillouin Zone}
+Note that for all $\vec{\lambda}\in \Lambda$, $\Lambda$ being the Bravais lattice, the unbroken symmetry statement is that, with $\rho$ denoting the equilibrium density,
+\begin{align*}
+\rho(\vec{R} + \vec{\lambda}) = \rho(\vec{R})\,.
+\end{align*}
+We can explore how it looks in the momentum space. The Fourier transform 
+\begin{align*}
+\that{\rho}(\vec{k}) = \int d^3R \, e^{-i \vec{k}\cdot \vec{R}} \, \rho(\vec{R}) = \int d^3R \, e^{-i\vec{k}\cdot \vec{R}} \, \rho(\vec{R}+\vec{\lambda})\,,
+\end{align*}
+a change of variable gets us 
+\begin{align*}
+\that{\rho}(\vec{k}) = \int d^3R \, e^{i\vec{k}\cdot \vec{\lambda}}\, e^{-i\vec{k}\cdot \vec{R}}\, \rho(\vec{R}) = e^{i\vec{k}\cdot \vec{\lambda}} \,\that{\rho}(\vec{k})\,.
+\end{align*}
+Thus we see that $\that{\rho}(\vec{k}) = 0$ unless $e^{i\vec{k}\cdot \vec{\lambda}} =1$ for every $\vec{\lambda}\in\Lambda$, or equivalently, unless $\vec{k}\cdot\vec{\lambda} = 2\pi n$ for $n \in \Z$. Thus the reciprocal lattice is defined as 
+\begin{align*}
+\Lambda^* \coloneqq \{ \vec{k} | \forall \vec{\lambda} \in \Lambda, \ \vec{k}\cdot \vec{\lambda} \in 2\pi \Z\}\,.
+\end{align*}
+It is then not difficult to show that, for $\vec{a}_{1,2,3}$ being the $\Z$-basis of $\Lambda$, if $\vec{k}_i \cdot \vec{a}_j = 2\pi \delta_{ij}$, then $\vec{k}_{1,2,3}$ form a $\Z$-basis of $\Lambda^*$. For terminology, the Wigner-Seitz unit cell of $0\in \Lambda^*$ is called the first Brillouin zone. \\
+
+\subsection{Elastic Diffraction and Frequency Selection}
+Now back to X-ray scattering, we were interested in the crystal form factor 
+\begin{align*}
+w(\vec{q}) = \sum_{\vec{\lambda} \in \Lambda} e^{-i\vec{q} \cdot \vec{\lambda}}\,,
+\end{align*}
+which, in the ideal infinite-crystal limit, is supported only at $\vec{q} \in \Lambda^*$. \\
+
+In addition to this selection of $\vec{q}$, we also have a frequency selection from conservation of energy. Let $\omega_{\text{in}}$ and $\omega_{\text{out}}$ be the incoming and outgoing photon frequencies, and let $E_i$ and $E_f$ be the initial and final energies of the crystal. Then
+\begin{align*}
+\hbar\omega_{\text{in}}+E_i
+&=\hbar\omega_{\text{out}}+E_f\,.
+\end{align*}
+For elastic scattering, the internal energy of the crystal is unchanged, and we neglect its overall recoil energy, so $E_f=E_i$. Using the vacuum photon dispersion, we see that
+\begin{align*}
+\omega_{\text{in}}=\omega_{\text{out}}=\omega\,,
+\qquad
+|\vec{k}_{\text{in}}|=|\vec{k}_{\text{out}}|=k=\frac{\omega}{c}\,.
+\end{align*}
+Thus the photon can change direction while keeping the same frequency. This equality uses the assumption of elastic scattering; energy conservation also allows a change in frequency when the crystal gains or loses energy. \\
+
+Recall that we defined $\vec{q}=\vec{k}_{\text{out}}-\vec{k}_{\text{in}}$. Let us write
+\begin{align*}
+\vec{Q}\coloneqq\vec{k}_{\text{in}}-\vec{k}_{\text{out}}=-\vec{q}\,,
+\qquad
+\vec{k}_{\text{in}}=k\hat{s}\,,
+\qquad
+\vec{k}_{\text{out}}=k\hat{s}-\vec{Q}\,,
+\end{align*}
+where $\hat{s}$ is the incident direction. The crystal receives momentum $\hbar\vec{Q}$. Here $\vec{Q}$ is determined by the incoming and outgoing photon wavevectors. Let $\vec{G}\in\Lambda^*$ be a reciprocal-lattice vector, which characterizes the crystal's lattice spacings and orientation. Like $\vec{Q}$, $\vec{G}$ has units of inverse length; the corresponding momentum is $\hbar\vec{G}$. For an arbitrary choice of incoming and outgoing photon wavevectors, $\vec{Q}$ need not equal any $\vec{G}$. We now ask which choices produce constructive interference. \\
+
+Consider scattering from a site at $\vec{R}$. The incident wave contributes a phase $e^{i\vec{k}_{\text{in}}\cdot\vec{R}}$, while propagation from that site to a distant detector in the outgoing direction contributes $e^{-i\vec{k}_{\text{out}}\cdot\vec{R}}$, after removing a common detector phase. Their product is therefore
+\begin{align*}
+e^{i\vec{k}_{\text{in}}\cdot\vec{R}}
+e^{-i\vec{k}_{\text{out}}\cdot\vec{R}}
+=e^{i\vec{Q}\cdot\vec{R}}\,.
+\end{align*}
+For two equivalent sites separated by a lattice vector $\vec{\lambda}$, the relative phase is $e^{i\vec{Q}\cdot\vec{\lambda}}$. Thus the contributions from all lattice sites are in phase when
+\begin{align*}
+e^{i\vec{Q}\cdot\vec{\lambda}}=1
+\quad\text{for all }\vec{\lambda}\in\Lambda
+\qquad\text{iff}\qquad
+\vec{Q}\cdot\vec{a}_i=2\pi m_i\,,\quad m_i\in\Z\,.
+\end{align*}
+Therefore, having $\vec{Q}=\vec{G}$ for some $\vec{G}\in \Lambda^*$ means that the wavevector transfer determined by the scattering geometry matches one of the reciprocal-lattice vectors of the crystal, resulting in constructive interference in the chosen outgoing detector direction.\\
+
+For example, in a one-dimensional chain with sites at $R_j=ja$, the lattice part of the scattering amplitude is
+\begin{align*}
+\sum_{j=0}^{N-1}e^{iQja}\,.
+\end{align*}
+If $Qa=2\pi m$, every term equals one and the sum is $N$. If $Qa=\pi$, successive terms are $1,-1,1,-1,\ldots$, and they cancel for even $N$. This illustrates how the lattice selects the transfer: the scattered waves reinforce each other at $Q=G=2\pi m/a$, while their different phases suppress the signal away from these values. In a large finite crystal the peaks have finite width, and in the ideal infinite-crystal limit the lattice sum is supported only at reciprocal-lattice vectors. \\
+
+For a Bragg reflection, the momentum delivered to the crystal is consequently $\hbar\vec{Q}=\hbar\vec{G}$. In our earlier sign convention, $\vec{q}=-\vec{G}$, which is also in $\Lambda^*$ since the reciprocal lattice contains both signs. This interference condition must still be combined with energy conservation; not every reciprocal vector can be reached by a given incident beam. Now imposing $\vec{Q}=\vec{G}$ and using the equal incoming and outgoing wavevector magnitudes, we obtain
+\begin{align*}
+k^2=|\vec{k}_{\text{out}}|^2
+&=|k\hat{s}-\vec{G}|^2\\
+&=k^2-2k\hat{s}\cdot\vec{G}+G^2\,.
+\end{align*}
+where $G=|\vec{G}|$. Cancelling $k^2$, we see that
+\begin{align*}
+G^2=2k\hat{s}\cdot\vec{G}
+=\frac{2\omega}{c}\hat{s}\cdot\vec{G}\,.
+\end{align*}
+This is the frequency selection condition. For a fixed crystal orientation, incident direction, and nonzero reciprocal vector, it gives
+\begin{align*}
+\omega_{\vec{G}}=\frac{cG^2}{2\hat{s}\cdot\vec{G}}\,,
+\qquad \hat{s}\cdot\vec{G}>0\,.
+\end{align*}
+The outgoing direction is then fixed by $\vec{k}_{\text{out}}=k\hat{s}-\vec{G}$. The case $\vec{G}=0$ is forward scattering and imposes no frequency selection. In terms of our earlier convention, the same elastic condition reads $q^2=-2k\hat{s}\cdot\vec{q}$. \\
+
+For a beam containing many frequencies, a given nonzero reciprocal vector selects the incident frequency that can contribute to that Bragg reflection, and the scattered light retains that frequency. For a monochromatic beam, $k$ is already fixed, so only reciprocal vectors satisfying this condition can produce Bragg reflections. Rotating the crystal changes their orientation relative to the beam. These conditions determine the possible peak positions, while atomic form factors and the arrangement of atoms within a cell determine their intensities and can suppress some peaks. \\
+
+
+\section{Neutron Scattering and Density Dynamics}
+Now we will study neutron scattering to probe the sample's excitations. We will derive that the scattering rate is proportional to the dynamical structure factor $S(\vec{q},\omega)$; integrating over frequency gives the static structure factor $S(\vec{q})$. Then we derive the $f$-sum rule which fixes the mean energy transfer $f(\vec{q})/S(\vec{q})$ and estimates the excitation energy when one mode dominates. This result can be compared to our established understanding of X-ray scattering in the previous section. \\
+
+In previous discussion, we wrote down
+\begin{align*}
+w(\vec{q}) = \langle\langle \sum_{i=1}^N e^{-i\vec{q}\cdot \vec{r}_i}\rangle\rangle\,,
+\end{align*}
+and interpret it as a quantity which controls coherent elastic scattering with momentum transfer $-\hbar\vec{q}$ to the sample. We said that in a crystalline phase with Bravais lattice $\Lambda$, the unbroken translation symmetries, the inverse Fourier transform of $w(\vec{q})$ is the real space equilibrium density (pair distribution function) which is a $\Lambda$-periodic function, that is, $w(\vec{q})$ is supported on $\vec{q}\in \Lambda^*$, where $\Lambda^*$ is the reciprocal lattice. \\
+
+\subsection{Neutron--Crystal Interaction and Scattering Rate}
+For neutron scattering, the kinetic energy of the neutron is of the order of meV to tens of meV, which is comparable to the lattice excitation energies. Therefore, in addition to elastic scattering, we will be considering  inelastic scatterings here. Consider the total Hamiltonian of the system 
+\begin{align*}
+H_{\text{total}} =
+H_{\text{neutron}} + H_{\text{crystal}} + H_{\text{int}}\,, 
+\end{align*}
+for notation, we write $H_{\text{crystal}} = H$. The neutron is a free particle, so 
+\begin{align*}
+H_{\text{neutron}} = \frac{p_n^2}{2M_n}\,.
+\end{align*}
+For the interaction, we have strong force and spin interaction, but here let us consider only the strong force interaction first. The strong interaction is extremely short-range; taking a common real coupling $\alpha$ for all nuclei,
+ \begin{align*}
+H_{\text{int}} = \alpha \sum_{j=1}^N \delta (\vec{R}_n - \vec{r}_j)
+\end{align*}
+where $\vec{r}_j$ is the position of the $j$-th nucleus and $\vec{R}_n$ is the position of the neutron. Consider the wavefunction of the initial state of the entire system, 
+\begin{align*}
+\Psi_i(\vec{R}_n, \, \{\vec{r}_j\}) = \psi_{\vec{p}}(\vec{R}_n) \, \phi_i(\{\vec{r}_j\})\,,
+\end{align*}
+where $\psi_{\vec{p}}$ is a plane-wave solution as we consider that the neutron is far away from the crystal initially, 
+\begin{align*}
+\psi_{\vec{p}}(\vec{R}_n) = \frac{1}{\sqrt{L^3}} e^{i\vec{p}\cdot \vec{R}_n/\hbar}\,,
+\end{align*}
+which gives the initial total energy of the system (where interaction is absent for now, and we keep $\hbar$ explicit) 
+\begin{align*}
+E_{i,\text{total}} = \frac{p^2}{2M_n} + E_i\,.
+\end{align*}
+For the final state, 
+\begin{align*}
+E_{f,\text{total}} = \frac{(p')^2}{2M_n} + E_f\,.
+\end{align*}
+Via Fermi golden rule, to leading order in the interaction, the rate of scattering from the initial state to the final state is 
+\begin{align*}
+\Gamma_{if} = \frac{2\pi}{\hbar} \delta(E_{f,\text{total}} - E_{i,\text{total}}) | M_{if}|^2\,,
+\end{align*}
+where 
+\begin{align*}
+M_{\text{if}} = \langle \Psi_f | H_{\text{int}} | \Psi_i\rangle\,.
+\end{align*}
+Writing with our notation, let $\hbar\omega$ be the energy transferred to the crystal by the neutron, 
+\begin{align*}
+\hbar \omega = \frac{p^2}{2M_n} - \frac{(p')^2}{2M_n}\,,\qquad
+\Gamma_{if} = \frac{2\pi}{\hbar}\delta(E_f - E_i - \hbar \omega) |M_{if}|^2
+\end{align*}
+In a thermal state of $\beta=1/(k_\text{B} T)$, it is natural to define
+\begin{align*}
+\Gamma_{\vec{p} \vec{p}'} = \frac{1}{Z}\sum_{i,f}\Gamma_{if} e^{-\beta E_i}\,.
+\end{align*}
+Here we have
+\begin{align*}
+M_{if} 
+&= \frac{1}{L^3} \int d^3R\, e^{i(\vec{p}-\vec{p}')\cdot \vec{R}/\hbar} \langle \Phi_f | \alpha \sum_{j=1}^N \delta(\vec{R} - \vec{r}_j) |\Phi_i\rangle\\
+&= \alpha\sum_{j=1}^N \frac{1}{L^3} \int d^3R\, e^{i(\vec{p}-\vec{p}')\cdot \vec{R}/\hbar} \langle \Phi_f | \delta(\vec{R} - {\vec{r}}_j)| \Phi_i\rangle\\
+&= \frac{\alpha}{L^3}\sum_{j=1}^N \langle \Phi_f | e^{i(\vec{p} - \vec{p}')\cdot \vec{r}_j/\hbar}| \Phi_i\rangle\,.
+\end{align*}
+Defining $\vec{q} = (\vec{p}' - \vec{p})/\hbar$, so the sample receives momentum $-\hbar\vec{q}$, we see that 
+\begin{align*}
+M_{if} = \frac{\alpha}{L^3} \langle \Phi_f | \sum_{j=1}^N e^{-i\vec{q}\cdot \vec{r}_j} | \Phi_i\rangle\,.
+\end{align*}
+\subsection{Dynamical Structure Factor}
+Recall that 
+\begin{align*}
+S(\vec{q}) = \frac{1}{N}\langle\langle \that{\rho}(-\vec{q})\that{\rho}(\vec{q})\rangle\rangle = \frac{1}{NZ}\sum_i\langle i|\that{\rho}(-\vec{q})\that{\rho}(\vec{q})|i\rangle e^{-\beta E_i}\,.
+\end{align*}
+We can try to rearrange $\Gamma_{\vec{p}\vec{p}'}$, from
+\begin{align*}
+\Gamma_{\vec{p}\vec{p}'} 
+&= \frac{2\pi \alpha^2}{\hbar L^6} \sum_{i,f}\delta(E_f - E_i - \hbar \omega)  e^{-\beta E_i}Z^{-1} \sum_{j,k=1}^N \langle \Phi_i | e^{i\vec{q}\cdot \vec{r}_j}|\Phi_f\rangle \langle \Phi_f | e^{-i\vec{q}\cdot \vec{r}_k}|\Phi_i\rangle\,.
+\end{align*}
+Notice that 
+\begin{align*}
+\delta(E_f - E_i - \hbar \omega) = \frac{1}{2\pi \hbar} \int_{-\infty}^\infty dt e^{-i (E_f - E_i)t/\hbar}e^{i\omega t}\,,
+\end{align*}
+we see that 
+\begin{align*}
+\Gamma_{\vec{p}\vec{p}'} 
+&= \frac{\alpha^2}{\hbar^2L^6} \int_{-\infty}^\infty dt\, e^{i\omega t}\sum_{i,f} Z^{-1}e^{-\beta E_i} \sum_{j,k=1}^N \langle \Phi_i | e^{itH/\hbar}e^{i\vec{q}\cdot \vec{r}_j} e^{-itH/\hbar} | \Phi_f\rangle \langle \Phi_f | e^{-i \vec{q}\cdot \vec{r}_k}|\Phi_i\rangle\\
+&= \frac{\alpha^2}{\hbar^2 L^6} \int_{-\infty}^\infty dt\, e^{i\omega t}\sum_{i} Z^{-1}e^{-\beta E_i}\sum_{j,k=1}^N\langle \Phi_i | e^{i\vec{q}\cdot \vec{r}_j(t)} e^{-i\vec{q}\cdot \vec{r}_k(0)}|\Phi_i\rangle\,,
+\end{align*}
+where $\vec{r}_j(t)$ is considered in the Heisenberg picture for operator $\vec{r}$ at time $t$.
+This gives rise to the dynamical structure factor,
+\begin{align*}
+S(\vec{q},\omega) = \frac{1}{N}\int_{-\infty}^\infty dt\, e^{i\omega t} \sum_{j,k=1}^N \langle\langle 
+e^{i\vec{q}\cdot \vec{r}_j(t)} e^{-i\vec{q}\cdot \vec{r}_k(0)}
+\rangle\rangle\,,
+\end{align*}
+such that 
+\begin{align*}
+\Gamma_{\vec{p}\vec{p}'} = \frac{N}{\hbar^2 L^6} \alpha^2S(\vec{q},\omega)\,,
+\end{align*}
+whereas, comparing with the static structure factor in the X-ray scattering story, 
+\begin{align*}
+S(\vec{q}) = \int_{-\infty}^\infty \frac{d\omega}{2\pi}S(\vec{q},\omega)\,.
+\end{align*}
+
+Now recall the density operator, 
+\begin{align*}
+\rho(\vec{r},t ) = \sum_{j=1}^N \delta (\vec{r} - \vec{r}_j(t))\,,
+\end{align*}
+where a Fourier transform leads us to 
+\begin{align*}
+\that{\rho}(\vec{q},t) = \int d^3r \, e^{-i\vec{q}\cdot \vec{r}} \rho(\vec{r},t)  = \sum_{j=1}^N e^{-i\vec{q}\cdot \vec{r}_j(t)}\,.
+\end{align*}
+Let us write
+\begin{align*}
+\Pi(\vec{q},t) = \frac{1}{N}\langle\langle 
+\that{\rho}(-\vec{q}, t) \, \that{\rho}(\vec{q},0)
+\rangle\rangle\,,
+\end{align*}
+we see that 
+\begin{align*}
+S(\vec{q},\omega) = \int_{-\infty}^\infty dt\, e^{i\omega t}\Pi(\vec{q},t)\,.
+\end{align*}
+On the other hand, writing
+\begin{align*}
+S_i(\vec{q},\omega) = \frac{1}{N}\sum_f |\langle f |\that{\rho}(\vec{q},0)| i\rangle |^2\cdot 2\pi \cdot \delta(\omega - (E_f - E_i)/\hbar)\,,
+\end{align*}
+we see that 
+\begin{align*}
+S(\vec{q},\omega) =\sum_i \frac{e^{-\beta E_i}}{Z}S_i(\vec{q},\omega) \,.
+\end{align*}
+Consider a spectral decomposition 
+\begin{align*}
+\that{\rho}(\vec{q}, t) |i\rangle = \sum_f c_f|f\rangle\,,
+\end{align*}
+we see that $S_i$ is a spectral density of eigenstates from $\that{\rho}(\vec{q}, t) |i\rangle $. \\
+
+\subsection{The \texorpdfstring{$f$}{f}-Sum Rule}
+The average energy transfer associated with $\that{\rho}(\vec{q}, t) |i\rangle $, after thermal and spectral weighting, is $f(\vec{q})/S(\vec{q})$ where
+\begin{align*}
+f(\vec{q}) = \int_{-\infty}^\infty \frac{d\omega}{2\pi}\, S(\vec{q},\omega) \,\hbar\omega
+\end{align*}
+A formula for this first energy moment is called the $f$-sum rule. Assume all atoms have mass $M$, then we can derive
+\begin{align*}
+\frac{f(\vec{q})}{S(\vec{q})} = \frac{\hbar^2 q^2}{2M} \frac{1}{S(\vec{q})}\,.
+\end{align*}
+From here, denote $\that{\rho}(\vec{q},t)$ as $\rho_{\vec{q}}(t)$, we can write
+\begin{align*}
+f(\vec{q}) = \sum_i f_i(\vec{q}) Z^{-1}e^{-\beta E_i}\,,
+\end{align*}
+where 
+\begin{align*}
+f_i(\vec{q}) &= \int_{-\infty}^\infty \frac{d\omega}{2\pi}\,\hbar\omega S_i(\vec{q},\omega)\\
+&= \int_{-\infty}^{\infty} d\omega \, \frac{ \hbar	\omega}{N}\sum_f \langle i |\rho_{-\vec{q}}|f\rangle\langle f|\rho_{\vec{q}}|i\rangle \,\delta(\omega - (E_f- E_i)/\hbar)\\
+&=\frac{1}{N}\sum_f \langle i | \rho_{-\vec{q}}E_f - E_i \rho_{-\vec{q}}|f\rangle\langle f | \rho_{\vec{q}}|i\rangle\\
+&= -\frac{1}{N}\sum_f \langle i | [H, \rho_{-\vec{q}}] | f\rangle\langle f | \rho_{\vec{q}}|i\rangle\\
+&= -\frac{1}{N}\langle i | [H, \rho_{-\vec{q}}]\rho_{\vec{q}}|i\rangle\\
+&= \frac{i\hbar}{N}\langle i | \dot{\rho}_{-\vec{q}}\rho_{\vec{q}}|i\rangle\,.
+\end{align*}
+Using the same argument, we could have found 
+\begin{align*}
+f_i(\vec{q}) = \frac{1}{N}\langle i | \rho_{-\vec{q}}[H, \rho_{\vec{q}}]|i\rangle\,.
+\end{align*}
+With an additional assumption of inversion symmetry, such that $f(\vec{q}) = f(-\vec{q})$, then we see that 
+\begin{align*}
+f(\vec{q}) = \frac{1}{2N}\langle\langle [\rho_{-\vec{q}}, [H, \rho_{\vec{q}}]]\rangle\rangle\,.
+\end{align*} 
+This turns out to be independent of particle interaction in some sense. That is, consider 
+\begin{align*}
+H = T + V(\{\vec{r}_j\})\,,
+\end{align*}
+where the kinetic part is simply $T = \sum_j p_j^2/(2M)$, we see that 
+\begin{align*}
+\rho_{\vec{q}} = \sum_{j=1}^N e^{-i\vec{q}\cdot \vec{r}_j}
+\end{align*}
+commutes with $V$, thus $f(\vec{q})$ is independent of $V$, the particle interaction in this sense. \\
+
+Now we can write
+\begin{align*}
+[T, \rho_{\vec{q}}] = \sum_{j=1}^N \frac{1}{2M}[p_j^2, \rho_{\vec{q}}]\,,
+\end{align*}
+where 
+\begin{align*}
+[p_j^2, \rho_{\vec{q}}] = p_j^\mu [p_j^\mu, \rho_{\vec{q}}] + [p_j^\mu , \rho_{\vec{q}}] p_j^\mu =-\hbar
+( \vec{p}_j \cdot \vec{q}e^{-i\vec{q}\cdot \vec{r}_j} + e^{-i\vec{q}\cdot \vec{r}_j}\vec{p}_j \cdot \vec{q})
+\,,
+\end{align*}
+since
+\begin{align*}
+[p_j^\mu, \rho_{\vec{q}}] = -i\hbar \frac{\pd}{\pd r_j^\mu}\rho_{\vec{q}} = -\hbar q^{\mu} e^{-i \vec{q}\cdot \vec{r}_j}\,.
+\end{align*}
+One can also show that 
+\begin{align*}
+\frac{[\rho_{-\vec{q}}, [p_j^2, \rho_{\vec{q}}]]}{2M} = \frac{\hbar^2 q^2}{M}\,,
+\end{align*}
+then we finally see that 
+\begin{align*}
+f(\vec{q}) = \frac{\hbar^2 q^2}{2M}\,.
+\end{align*}
+
+\subsection{Single-Mode Approximation}
+In the single mode assumption, at $T=0$ and with $\langle0|\rho_{\vec{q}}|0\rangle=0$, we can suppose that 
+\begin{align*}
+\rho_{\vec{q}}|0\rangle \coloneqq | \vec{q}\rangle
+\end{align*}
+is approximately an eigenstate of the system with energy $E_i+\hbar \Omega(\vec{q})$. Then, with $S(\vec{q})$ evaluated at $T=0$, 
+\begin{align*}
+S_0(\vec{q},\omega) = \frac{1}{N} \sum_f |\langle f | \rho_{\vec{q}}|0\rangle|^2 2\pi \, \delta(\omega - (E_f - E_i/\hbar) \approx 2\pi\delta(\omega - \Omega(\vec{q})) \, S(\vec{q})
+\end{align*} 
+so the average energy is 
+\begin{align*}
+\hbar \Omega(\vec{q}) \approx \frac{f(\vec{q})}{S(\vec{q})} = \frac{\hbar^2 q^2}{2M} \frac{1}{S(\vec{q})}\,,
+\end{align*}
+thus we can estimate the dispersion relation of the mode $|\vec{q}\rangle$ from the static structure factor. \newpage
+
+
+
+
+
+% Original recap retained below; its corrected introduction is placed before the derivation.
+% We study neutron scattering in perturbation theory. We started with a Hamiltonian 
+% \begin{align*}
+% H_{\text{tot}} = H_n + H + H_{\text{int}}\,,
+% \end{align*}
+% where $H$ is the Hamiltonian of the crystal and is the one that we want to probe. $H_{\text{int}}$ is very-short-range interaction between the nucleus of the atoms and the neutrons. We calculated from Fermi's golden rule (assumes that there is only one time of interaction that occurred), the scattering rate from incoming neutron of momentum $\vec{p}$ to outgoing neutron of momentum $\vec{p}'$, 
+% \begin{align*}
+% \Gamma_{\vec{p}\vec{p}'} = \frac{N\alpha^2}{\hbar^2 L^6} \,,S(\vec{q},\omega)\,,
+% \end{align*}
+% where $\vec{q} = \vec{p} - \vec{p}'$ is the momentum transferred to the sample, and $\hbar\omega$ is the energy transferred to the sample. The dynamical structure factor reads
+% \begin{align*}
+% S(\vec{q},\omega) = \frac{1}{N}\int_{-\infty}^\infty dt\, e^{i\omega t} \sum_{j,k=1}^N \langle \langle 
+% e^{i\vec{q}\cdot \vec{r}_j(t) }
+% e^{-i\vec{q}\cdot \vec{r}_k(0)}
+% \rangle\rangle \coloneqq
+% \frac{1}{N}\int_{-\infty}^\infty dt\, e^{i\omega t} N \Pi(\vec{q},t)
+% \,,
+% \end{align*}
+% where we see that 
+% \begin{align*}
+% \Pi(\vec{q},t) = \frac{1}{N} \langle \langle \rho(-\vec{q},t) \, \rho(\vec{q},0)\rangle\rangle\,.
+% \end{align*}
+% Comparing with the static structure factor, we see that 
+% \begin{align*}
+% S(\vec{q}) = \int_{-\infty}^\infty \frac{d\omega}{2\pi}\, S(\vec{q},\omega)\,.
+% \end{align*}
+% Now at fixed $\vec{q}$, we see that $S(\vec{q},\omega)/(2\pi S(\vec{q}))$ is a probability distribution of energies $\hbar\omega$ obtained from $\rho_{\vec{q}}|i\rangle$, thermally averaged over $|i\rangle$. The average energy transferred is thus 
+% \begin{align*}
+% \Delta (\vec{q}) = \frac{f(\vec{q})}{S(\vec{q})} = \int_{-\infty}^\infty \frac{\hbar\omega\, S(\vec{q},\omega)}{2\pi \, S(\vec{q})} = \frac{q^2}{2M}\frac{1}{S(\vec{q})}\,.
+% \end{align*}
+% % this is the end of the TODO here
+
+
+\subsection{Classical Harmonic Oscillator}
+Now as an example, let us consider a classical harmonic oscillator, with momentum $p$ and displacement from equilibrium $x$. Here we can write
+\begin{align*}
+H = \frac{p^2}{2M} + \frac{1}{2}M\Omega^2 x^2\,,
+\end{align*}
+where $M$ is the mass and $\Omega$ is the resonant frequency. We can compute its 
+\begin{align*}
+\Pi(q,t) = \langle \langle e^{iq x(t)}\, e^{-iqx(0)}\rangle\rangle\,.
+\end{align*}
+Consider initial conditions $x(0) = x_0$ and $p(0) = p_0$, where we will solve $x(t)$ given the initial conditions. We have solution to the Hamiltonian 
+\begin{align*}
+x(t) = x_0 \cos(\Omega t)  + \frac{p_0}{M \Omega}\sin(\Omega t)\,,
+\end{align*}
+then 
+\begin{align*}
+\Pi(q,t) = \langle\langle \exp\left({iqx_0(\cos(\Omega t) -1)}\right) \exp\left( \frac{iqp_0}{M\Omega}\sin(\Omega t) \right) \rangle\rangle
+\end{align*}
+With Boltzmann distribution, we have 
+\begin{align*}
+P(x_0,p_0) = \frac{1}{Z}\exp\left( -\beta\cdot \left( \frac{p_0^2}{2M} + \frac{1}{2}M\Omega^2x_0^2\right) \right)\,, 
+\end{align*}
+which is Gaussian, with $x_0$ and $p_0$ being independent, thus $x(t) - x_0$ is also a Gaussian with mean zero, and we can write
+\begin{align*}
+\Pi(q,t) = \langle\langle e^{iq(x(t) - x_0)}\rangle\rangle = 
+\exp\left( -\frac{q^2}{2}
+\langle \langle
+(x(t)-x_0)^2
+\rangle\rangle
+\right)\,,
+\end{align*}
+where 
+\begin{align*}
+\langle \langle
+(x(t)-x_0)^2
+\rangle\rangle = 
+\langle\langle x(t)^2\rangle\rangle - 2\langle\langle x(t) \, x_0\rangle\rangle + \langle\langle x_0^2\rangle\rangle = 2\left( \langle\langle x_0^2\rangle\rangle - \langle\langle x(t) \, x_0\rangle\rangle\right)\,.
+\end{align*}
+Using expression of $x(t)$, we have
+\begin{align*}
+\langle\langle x(t) \, x_0\rangle\rangle 
+&= \langle\langle x_0^2 \cos(\Omega t) + \frac{x_0p_0}{M\Omega} \sin(\Omega t) \rangle\rangle = \langle\langle x_0^2\rangle\rangle \cos(\Omega t)  + 0\,.
+\end{align*}
+Now we see 
+\begin{align*}
+\Pi(q,t) = \exp\left( -q^2  \langle\langle x_0^2\rangle\rangle (1 - \cos(\Omega t)) \right)\,.
+\end{align*}
+Now 
+\begin{align*}
+S(q,\omega) 
+&= \int_{-\infty}^\infty dt\, e^{i\omega t}\, e^{-q^2\langle \langle x_0^2 \rangle\rangle (1- \cos(\Omega t))}\\
+&= e^{-q^2\langle\langle x_0^2\rangle\rangle} \int_{-\infty}^\infty dt\, e^{i\omega t}e^{q^2 \langle\langle x_0^2\rangle\rangle \cos(\Omega t)}\\
+&= 2\pi e^{-q^2 \langle \langle x_0^2\rangle\rangle} \sum_{n=-\infty}^\infty I_n\left( q^2\langle\langle x_0^2\rangle\rangle \right) \, \delta(\omega - n\Omega)\,,
+\end{align*}
+where $I_n$ are the modified Bessel functions of the first kind. As $q^2 \langle\langle x_0^2\rangle\rangle \to \infty$ at fixed $n$, we will have
+\begin{align*}
+I_n (q^2 \langle\langle x_0^2\rangle\rangle) \sim \frac{\exp(q^2\langle\langle x_0^2\rangle\rangle)}{\sqrt{2\pi q^2\langle\langle x_0^2\rangle\rangle}}\,.
+\end{align*}
+As an exercise, one can show that 
+\begin{align*}
+\langle\langle x_0^2\rangle\rangle = \frac{k_{\text{B}}T}{M\Omega^2}
+\end{align*}
+with the Boltzmann distribution. Now we see that $S(q,\omega)$ probes the frequency $\Omega$, characterized by the separation of the peaks on the $S(q,\omega)$ vs.\ $\omega$ plot. \\
+
+\subsection{Quantum Harmonic Oscillator}
+Now let us consider the quantum harmonic oscillator, where we are still interested in 
+\begin{align*}
+\Pi(q,t) = \langle \langle e^{iq \hat{x}(t)}\, e^{-iq\hat{x}(0)}\rangle\rangle\,.
+\end{align*}
+Keeping $\hbar$ explicit, we have
+\begin{align*}
+\hat{x}(t) = e^{iHt/\hbar}\hat{x}(0) \, e^{-iH t/\hbar}\,,\qquad
+\frac{\pd\hat{x}(t)}{\pd t} = \frac{\hat{p}(t)}{M}\,,\qquad
+\frac{\pd\hat{p}(t)}{\pd t} = -M\Omega^2 \hat{x}(t)\,,
+\end{align*}
+where we have denoted $\hat{x} = \hat{x}(0)$, and 
+\begin{align*}
+\hat{x}(t) = \hat{x}\cos(\Omega t) + \frac{1}{M\Omega}\sin(\Omega t) \hat{p}\,.
+\end{align*}
+From here one can show that 
+\begin{align*}
+\Pi(q,t) = \exp\left(q^2\langle\langle \hat{x}^2\rangle\rangle \left( \cos(\Omega t) -1 \right) - \frac{i\hbar q^2}{2M\Omega}\sin(\Omega t)\right)
+\end{align*}
+where the second term in the exponent comes from the commutator of $\hat{x}$ and $\hat{p}$ when combining the two ordered exponentials.\\
+
+Notice that as $T\to 0$, we can replace $\langle\langle \cdot \rangle\rangle$ with $\langle 0 | \cdot |0\rangle$, in which case we have 
+\begin{align*}
+\langle 0 | \hat{x}^2|0\rangle = \frac{\hbar}{2M\Omega} \coloneqq x_0^2\,,
+\end{align*}
+thus 
+\begin{align*}
+\Pi(q,t) = \exp({-q^2 x_0^2})\,\exp({q^2x_0^2e^{-i\Omega t}}) = \exp(-q^2x_0^2) \sum_{n=0}^\infty 
+\frac{(q^2x_0^2)^n}{n!}\exp\left( -in\Omega t\right)\,,
+\end{align*}
+thus we find 
+\begin{align*}
+S(q,\omega)  = 2\pi\exp(-q^2 x_0^2)\sum_{n=0}^\infty \frac{1}{n!}(q^2x_0^2)^n \delta(\omega - n\Omega)\,.
+\end{align*}
+Notice that this $S(q,\omega)$ vs.\ $\omega$ plot in the quantum case is not symmetric over $\omega = 0$, while it is symmetric in the classical case. \\
+
+\section{Dynamics of Lattice Vibrations}
+\subsection{Adiabatic Approximation and Effective Nuclear Hamiltonian}
+We start by discussing the adiabatic approximation. It is difficult to discuss the interaction between all electrons (and nuclei) in all atoms at all lattices, thus we employ the adiabatic approximation where we assume that the electrons are much faster than the nuclei in their dynamics. Denote the position of nuclei as $\vec{r}_1,\,\cdots\,, \vec{r}_N$, and the position of the electrons as $\vec{\xi}_1,\,\cdots,\, \vec{\xi}_{N_e}$. Here we fix $\vec{r}_i$ to get a Hamiltonian for the electrons
+\begin{align*}
+H_{e, \vec{r}_i}\, \psi_{e,\vec{r}_i}(\vec{\xi}_1,\,\cdots,\, \vec{\xi}_{N_e}) = E_{e, \vec{r}_i}\,\psi_{e,\vec{r}_i}(\vec{\xi}_1,\,\cdots,\, \vec{\xi}_{N_e}) \,.
+\end{align*}
+For many systems, we can assume that the electrons begin in their ground state. Typical nuclei motion will be very slow relative to the electron motion, so electrons remain in their ground state in this adiabatic limit. We will also assume eigenstates of the total Hamiltonian are approximately of the form 
+\begin{align*}
+\Psi(\vec{r}_1,\, \cdots,\, \vec{r}_N,\, \vec{\xi}_1,\, \cdots,\, \vec{\xi}_{N_e}) \approx \phi_n(\vec{r}_1,\,\cdots,\, \vec{r}_N) \, \psi_{e,\vec{r}_i}(\vec{\xi}_1,\,\cdots,\, \vec{\xi}_{N_e}) \,.
+\end{align*}
+The Hamiltonian for the nuclei is $H_n = T_n + V_{nn}$ where $T_n$ is the kinetic piece and $V_{nn}$ describes some pairwise interaction. With some argument, one can show that we can write an effective eigenvalue equation for the $\phi_n$, 
+\begin{align*}
+(T_n + V_{nn} + E_{e, \vec{r}_i}) \, \phi_n(\vec{r}_1,\, \cdots, \, \vec{r}_N) = E_{\text{tot}}\,\phi_n(\vec{r}_1,\, \cdots, \, \vec{r}_N)\,,
+\end{align*}
+where $E_{\text{tot}}$ is the total energy of the entire system, and $E_{e, \vec{r}_i}$ in this case is viewed as a potential-energy operator and it can introduce an attractive interaction between the nuclei. Let us call
+\begin{align*}
+V_{nn} + E_{e,\,\vec{r}_i} \coloneqq U
+\end{align*}
+being the effective interaction. With a further approximation, $U$ is just a two-body interaction, 
+\begin{align*}
+U\approx \sum_{i<j} V(|\vec{r}_i - \vec{r}_j|)\,,
+\end{align*}
+that is translationally and rotationally invariant.
+
+\subsection{Harmonic Approximation and Elasticity Tensor}
+The last assumption that we impose here is that $\vec{r}_j = \vec{R}_j + \vec{u}_j$, where $\vec{R}_j$ is a lattice position that corresponds to a minimum of $U$, and $\vec{u}_j$ is the displacement from such lattice position. Taking $|\vec{u}_j|$ to be small, we can write 
+\begin{align*}
+U(\vec{r}_1,\, \cdots,\, \vec{r}_N) \approx U(\vec{R}_1,\, \cdots,\, \vec{R}_N) + \frac{1}{2}\sum_{j,k=1}^N\sum_{\mu,\nu=1}^3u_j^{\mu} u_k^{\nu}\left(
+\frac{\pd}{\pd r_j^\mu}\frac{\pd}{\pd r_k^\nu}\, U
+\right)|_{\vec{r}=\vec{R}}
+\end{align*}
+where $U(\vec{R}_1,\, \cdots,\, \vec{R}_N)$ is a constant term, and the first derivative term in this Taylor expansion vanishes because $\vec{R}_j$ is defined as the minimum of the potential.\\
+
+Here we drop the constant term by redefining the zero of energy and neglect higher order terms. This is called the harmonic approximation to $U$. \\
+
+Call the second derivative evaluated at $\vec{r} = \vec{R}$ the elasticity tensor,
+\begin{align*}
+D_{jk}^{\mu\nu} = \left( 
+\frac{\pd}{\pd r_j^\mu}\frac{\pd}{\pd r_k^\nu}\, U\right)|_{\vec{r} = \vec{R}}\,,
+\end{align*}
+we have that 
+\begin{align*}
+U = \frac{1}{2} \sum_{j,k=1}^N\sum_{\mu,\nu=1}^3 u_j^\mu D_{jk}^{\mu\nu}u_k^{\nu}\,,
+\end{align*}
+then we can write the Hamiltonian for the nuclei
+\begin{align*}
+H = \sum_{j=1}^N \frac{p_j^2}{2M} + \frac{1}{2}\sum_{j,k=1}^N\sum_{\mu,\nu=1}^3 u_j^\mu D_{jk}^{\mu\nu}u_k^{\nu}\,.
+\end{align*}
+For the real central pair potential above, we have symmetries due to the symmetric nature of Hessian and inversion symmetry in lattice (atoms are identical),
+\begin{align*}
+D_{jk}^{\mu\nu} = D_{kj}^{\nu\mu}\,,\qquad
+D_{jk}^{\mu\nu} = D_{kj}^{\mu\nu}\,.
+\end{align*}
+\subsection{Normal Modes and the Dynamical Matrix}
+With classical analysis of such Hamiltonian under the consideration of Bravais lattice, we get easily that 
+\begin{align*}
+M\ddot{u}^{\mu}_{j} = -\frac{\pd}{\pd r_j^\mu} \, U = -\sum_{k=1}^N\sum_{\nu=1}^3 D_{jk}^{\mu\nu}u_k^{\nu}\,.
+\end{align*}
+Here $j,k=1,\ldots,N$ label sites and $\mu,\nu=1,2,3$ label Cartesian components. All component sums are written explicitly.
+Here we can assume a plane wave solution, 
+\begin{align*}
+u_{j}^\mu = e^{-i\omega t} e^{i\vec{q}\cdot \vec{R}_j} \epsilon^\mu(\vec{q}) \, \that{u}(\vec{q})
+\end{align*}
+where $\epsilon^\mu$ is component of a unit vector and $\that{u}$ is the amplitude. Using the equation of motion, we obtain 
+\begin{align*}
+M\omega^2 \epsilon^\mu =\sum_{k=1}^N\sum_{\nu=1}^3 D_{jk}^{\mu\nu} \epsilon^\nu e^{i\vec{q}\cdot (\vec{R}_k - \vec{R}_j)}\,.
+\end{align*}
+Then we can define 
+\begin{align*}
+\that{D}^{\mu\nu}(\vec{q}) = \sum_{k=1}^N D_{jk}^{\mu\nu} e^{i\vec{q}\cdot (\vec{R}_k - \vec{R}_j)}\,,
+\end{align*}
+which is a quantity that should not depend on the index $j$, even we are only summing over $k$, by the translational invariance of the lattice in the bulk. In other words, $D_{jk}^{\mu\nu}$ has the form 
+\begin{align*}
+D_{jk}^{\mu\nu} = C^{\mu\nu}(\vec{R}_k - \vec{R}_j)\,,
+\end{align*}
+then we see that 
+\begin{align*}
+\that{D}^{\mu\nu}(\vec{q}) = \sum_{\vec{R}_k \in \Lambda}C^{\mu\nu}(\vec{R}_k - \vec{R}_j) \, e^{i\vec{q}\cdot (\vec{R}_k - \vec{R}_j)}\,.
+\end{align*}
+That is, we can write
+\begin{align*}
+\that{D}^{\mu\nu}(\vec{q}) = \sum_{\vec{R}\in \Lambda} \, C^{\mu\nu}(\vec{R}) \, e^{i\vec{q}\cdot \vec{R}}\,,
+\end{align*}
+from which the symmetry requirement in $D^{\mu\nu}_{jk} = D^{\nu\mu}_{kj}$ requires that 
+\begin{align*}
+C^{\mu\nu}(\vec{R}) = C^{\nu\mu}(-\vec{R})\,,
+\end{align*}
+thus showing that we have $\that{D}^{\mu\nu}(\vec{q}) = \that{D}^{\nu\mu}(\vec{q})^*$, revealing the Hermiticity of $\that{D}^{\mu\nu}(\vec{q})$. Combining all, we have the equation of motion 
+\begin{align*}
+M\omega^2 \epsilon^{\mu}(\vec{q}) = \sum_{\nu=1}^3\that{D}^{\mu\nu}(\vec{q}) \, \epsilon^\nu(\vec{q})\,,
+\end{align*}
+which will have a solution as $\that{D}^{\mu\nu}$ is Hermitian, with real frequencies for a stable equilibrium.\\
+
+\subsection{One-Dimensional Chain and Continuum Limit}
+As an example, let us consider a 1-dimensional chain with lattice constant $a$,
+\begin{align*}
+U = \frac{\lambda}{2} \sum_n (r_{n+1} - r_n - a)^2\,.
+\end{align*}
+We see here $R_{n+1} - R_n = a$, and $r_n = R_n + u_n$, that is 
+\begin{align*}
+r_{n+1} - r_n - a = (R_{n+1} + u_{n+1}) - (R_n + u_n) -a =u_{n+1} - u_n\,.
+\end{align*}
+Now we can write $U$ in terms of $u_j$
+\begin{align*}
+U = \frac{\lambda}{2} \sum_n  (u_{n+1} - u_n)^2\,.
+\end{align*}
+This is 
+\begin{align*}
+\frac{\pd U}{\pd u_j} = -\lambda (u_{j+1} - u_j) + \lambda (u_j - u_{j-1}) = \lambda (2u_j - u_{j-1} - u_{j+1})\,,
+\end{align*}
+and the second derivative
+\begin{align*}
+\frac{\pd}{\pd u_k}\frac{\pd}{\pd u_j}\, U = D_{kj} = 2\lambda \delta_{k,j} - \lambda \delta_{k, j-1} - \lambda \delta_{k,j+1}\,.
+\end{align*}
+Writing in its matrix form, this is 
+\begin{align*}
+D = \lambda \bmat{
+\ddots & & & &  0\\
+ -1 & 2 & -1 & &  \\
+ & -1 & 2 & -1 &  \\
+ & & -1 & 2 & -1 \\
+0 & & & & \ddots
+}
+\end{align*}
+From here we can compute 
+\begin{align*}
+\that{D}(q) = \sum_k D_{jk}e^{iq(k-j)a} = 2\lambda - \lambda e^{iqa} - \lambda e^{-iqa} = 2\lambda (1 - \cos(qa))\,.
+\end{align*}
+This can be used to solve the equation of motion
+\begin{align*}
+M\omega^2 \epsilon^{\mu}  = \sum_{\nu}\that{D}^{\mu\nu} \, \epsilon^{\nu}\,,
+\end{align*}
+that is, in our 1-dimensional space, 
+\begin{align*}
+M\omega^2 = \that{D}(q) = 2\lambda(1-\cos(qa))\,,
+\end{align*}
+from which we obtain 
+\begin{align*}
+\omega = \left(\frac{2\lambda (1 - \cos(qa))}{M}\right)^{1/2} = 2\sqrt{\frac{\lambda}{M}}\left|
+\sin\left(\frac{qa}{2}\right)
+\right|\,.
+\end{align*}
+At small $q$, we have roughly $\omega \approx \sqrt{\lambda/M}a|q|$ which is linear in $q$. Furthermore, in general, not limited to this 1-dimensional example here, $u_j^\mu \propto e^{i\vec{q}\cdot \vec{R}_j}$ thus we see that $\vec{q}\to \vec{q}+\vec{b}$ for $\vec{b}\in \Lambda^*$ should give the same solution for $u_j^\mu$ as $\vec{q}$. Thus we have nonredundant wavevector labels for $u_j^\mu$  in the Brillouin zone in $(-\pi/a,\, \pi/a]$. \\
+
+We can have a continuum limit for the $1$-dimensional problem that we just discussed. Consider the limit where $a\to 0$ but $\eta = a^2\lambda$ and $M$ are fixed, then 
+\begin{align*}
+\frac{\pd U}{\pd u_j} = \frac{a^2 \lambda ( 2u_j - u_{j+1} - u_{j-1})}{a^2}\,,
+\end{align*}
+but now the site index $j$ is no longer a suitable spatial coordinate because we have $a \to 0$ in this continuum limit, thus we redefine a spatial coordinate $x = ja$, with $u(x,t)=u_j(t)$, such that we can write 
+\begin{align*}
+\frac{\pd U}{\pd u_j} = \eta \lim_{a \to 0} \frac{2u(x,t) - u(x+a,t) - u(x-a,t)}{a^2} = -\eta \frac{\pd^2 u}{\pd x^2} = -M \frac{\pd^2 u}{\pd t^2}\,,
+\end{align*}
+which is a wave equation with speed $v = \sqrt{\eta / M}$. \\
+
+\subsection{Chain with Two Sites per Unit Cell}
+Now let us consider the model in a non-Bravais-lattice situation, where we have two sites per cell (considered as two types of atoms) in the chain in the $ABAB$-ordering fashion, but different positive spring constants $\lambda_1$ and $\lambda_2$ connecting the atoms. Both atoms have mass $M$. The unit cell here consists of two atoms, $A$ and $B$, with a total length of $2a$. In the unit cell $j$, we have displacements $u_j$ and $v_j$ for the two atoms, thus we can write
+\begin{align*}
+U = \frac{1}{2}\sum_j \left(\lambda_2(u_j -v_j)^2 + \lambda_1 (u_j - v_{j-1})^2\right)\,,
+\end{align*}
+here we have the equation of motion 
+\begin{align*}
+M\ddot{u}_j = -\lambda_2 (u_j - v_j) - \lambda_1(u_j - v_{j-1})
+\end{align*}
+for $u_j$ and a similar one for $v_j$. \\
+
+Let $\vec{R}_j $ be the positions on the Bravais lattice of symmetries, we can write the plane-wave solution assumption, 
+\begin{align*}
+u_j = \epsilon_u e^{i\vec{q}\cdot \vec{R}_j} e^{-i\omega t}\,,\qquad
+v_j = \epsilon_v e^{i\vec{q}\cdot \vec{R}_j} e^{-i\omega t}\,,
+\end{align*}
+we see that 
+\begin{align*}
+&-M \omega^2 \epsilon_u = -(\lambda_1 + \lambda_2) \epsilon_u + (\lambda_2  +\lambda_1e^{-iq2a})\epsilon_v\,,\\
+&-M \omega^2 \epsilon_v = -(\lambda_1 + \lambda_2) \epsilon_v + (\lambda_2 + \lambda_1e^{iq2a})\epsilon_u\,.
+\end{align*}
+This is equivalent to 
+\begin{align*}
+-M\omega^2\bmat{\epsilon_u\\\epsilon_v} = \bmat{-\lambda_1 - \lambda_2 & \lambda_2 + e^{-iq2a}\lambda_1 \\ \lambda_2 + e^{iq2a}\lambda_1 & -\lambda_1 -\lambda_2}\bmat{\epsilon_u \\ \epsilon_v}\,.
+\end{align*}
+The matrix (equal to $-\that{D}(q)$ here) is Hermitian, and thus we can solve for $\omega$,
+\begin{align*}
+\omega_{\pm}^2 = \frac{1}{M}\left( \lambda_1 + \lambda_2 \pm \left|\lambda_2 + \lambda_1 e^{-iq2a}\right|\right)
+\end{align*}
+If $\lambda_1 = \lambda_2$, the band structure in the new Brillouin zone $(-\pi/(2a), \pi/(2a)]$ is obtained from the one that we had in the previous example by ``folding." While for $\lambda_1 \neq \lambda_2$, there is a gap in squared frequencies between the two bands at $q = -\pi/(2a)$ and at $q = \pi/(2a)$ of the size $2|\lambda_2 - \lambda_1|/M$. 
+
+
+\end{document}
