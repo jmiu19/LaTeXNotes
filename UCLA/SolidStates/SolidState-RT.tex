@@ -17,7 +17,7 @@
 \usepackage{titlesec}
 \usepackage{colortbl}
 \usepackage{tikz}
-\usetikzlibrary{arrows.meta}
+\usetikzlibrary{arrows.meta,decorations.pathmorphing}
 
 
 %%%%%%%%%%%%Figure Drawings%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -98,7 +98,7 @@
 \newcommand{\txtarrow}[1]{\xrightarrow{\text{#1}}}
 \newcommand{\txt}{Wald's \textit{General Relativity}}
 
-\newcommand{\note}{\color{red}Note: \color{black}}
+\newcommand{\note}{\color{black}Note: \color{black}}
 
 
 %%%%%%%%%%%%%table of contents%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -135,7 +135,7 @@
 	\begin{titlepage}
 		\begin{center}
 			\vspace*{0.5cm}
-			\Huge \color{red}
+			\Huge \color{black}
 				\textbf{Solid State Physics}\\
 			\vspace{0.5cm}			
 			\Large \color{black}
@@ -177,8 +177,6 @@ Therefore, the dimension of $\mathcal{H}_{\text{many body}}$ is
 which is generally large.\\
 
 \section{Spatial Structure}
-[Girvin and Yang Chapter 2 - Spatial Structure]\\
-
 \noindent Let us keep in mind that the size of an atom is around $1 - 10 \,\text{\AA}$. Therefore, to probe with light, we need a light of wavelength $\lambda \approx 1 - 10\, \text{\AA}$, which is measured around $E\approx 1- 10 \,$keV, and are X-rays. Alternatively, one can also use neutrons to probe it, which has a corresponding de Broglie wavelength with energy $E \approx 0.8-80\,$meV, which are nonrelativistic. 
 
 \subsection{Semiclassical X-ray Scattering}
@@ -948,6 +946,33 @@ As an exercise, one can show that
 \end{align*}
 with the Boltzmann distribution. Now we see that $S(q,\omega)$ probes the frequency $\Omega$, characterized by the separation of the peaks on the $S(q,\omega)$ vs.\ $\omega$ plot. \\
 
+% BEGIN ADDED LECTURE FIGURE: classical-spectrum
+\begin{latticefigure}
+\centering
+\begin{tikzpicture}[x=0.72cm,y=12cm,font=\small,>=Stealth]
+  \draw[->] (-5.8,0) -- (5.9,0) node[right] {$\omega/\Omega$};
+  \draw[->] (-5.8,0) -- (-5.8,0.235) node[above] {$W_n$};
+  \foreach \y in {0.1,0.2} {
+    \draw (-5.9,\y) -- (-5.7,\y);
+    \node[left] at (-5.9,\y) {$\y$};
+  }
+  \foreach \n in {-5,-4,...,5} {
+    \draw (\n,0) -- (\n,-0.004);
+    \node[below] at (\n,-0.004) {$\n$};
+  }
+  % Arrow lengths represent delta-function weights, not finite peak heights.
+  \foreach \n/\w in {-5/0.0092443,-4/0.0259400,-3/0.0611243,-2/0.1176265,-1/0.1787508,0/0.2070019,1/0.1787508,2/0.1176265,3/0.0611243,4/0.0259400,5/0.0092443} {
+    \draw[cellblue,line width=0.9pt,-{Stealth[length=1.5mm]}] (\n,0) -- (\n,\w);
+  }
+  \node at (-5.5,0.015) {$\cdots$};
+  \node at (5.5,0.015) {$\cdots$};
+  \node[anchor=north east] at (5.3,0.23) {$A=4$};
+\end{tikzpicture}
+\caption{The classical oscillator spectrum consists of delta functions at $\omega=n\Omega$. The arrow lengths show their weights $W_n=e^{-A}I_n(A)$, where $A=q^2\langle\langle x_0^2\rangle\rangle=q^2k_{\text{B}}T/(M\Omega^2)$; here $A=4$ is an example. Thus $S(q,\omega)=2\pi\sum_n W_n\delta(\omega-n\Omega)$. The weights are symmetric, $W_{-n}=W_n$, and the central peak is elastic. The spacing is $\Omega$; the tails continue beyond the peaks shown, with no sharp cutoff at $k_{\text{B}}T/\hbar$.}
+\label{fig:classical-oscillator-spectrum}
+\end{latticefigure}
+% END ADDED LECTURE FIGURE: classical-spectrum
+
 \subsection{Quantum Harmonic Oscillator}
 Now let us consider the quantum harmonic oscillator, where we are still interested in 
 \begin{align*}
@@ -1007,6 +1032,145 @@ being the effective interaction. With a further approximation, $U$ is just a two
 U\approx \sum_{i<j} V(|\vec{r}_i - \vec{r}_j|)\,,
 \end{align*}
 that is translationally and rotationally invariant.
+
+% BEGIN ADDED LECTURE FIGURE: fixed-nuclei
+\begin{latticefigure}
+\centering
+\begin{tikzpicture}[x=2.25cm,y=1cm,font=\small,>=Stealth]
+  % A smooth double well is used only as a schematic electronic potential.
+  \begin{scope}[yshift=2.7cm,y=0.65cm]
+    \draw[->] (-1.95,0) -- (1.95,0) node[right] {$\xi$};
+    \draw[->] (-1.95,0) -- (-1.95,3.35) node[above] {$V_e(\xi;r_1,r_2)$};
+    \draw[cellblue,line width=0.9pt,domain=-1.75:1.75,samples=101,smooth]
+      plot (\x,{0.7*(\x*\x-1)^2});
+    \foreach \x/\name in {-1/r_1,1/r_2} {
+      \draw (\x,0.08) -- (\x,-0.08) node[below] {$\name$};
+    }
+    \node[anchor=south east] at (1.75,2.85) {fixed nuclei};
+  \end{scope}
+  \begin{scope}[y=1.35cm]
+    \draw[->] (-1.95,0) -- (1.95,0) node[right] {$\xi$};
+    \draw[->] (-1.95,0) -- (-1.95,1.3) node[above] {$\psi_e(\xi;r_1,r_2)$};
+    \foreach \x/\name in {-1/r_1,1/r_2} {
+      \draw[gray!50,dashed] (\x,0) -- (\x,1.15);
+      \draw (\x,0.04) -- (\x,-0.04) node[below] {$\name$};
+    }
+    % Nodeless ground state of the illustrative smooth double well above;
+    % arbitrary coordinate, energy and wavefunction scales.
+    \draw[cubeochre,line width=0.9pt] plot[smooth] coordinates {
+(-1.74375,0.08405)
+(-1.71000,0.10393)
+(-1.67625,0.12705)
+(-1.64250,0.15362)
+(-1.60875,0.18374)
+(-1.57500,0.21746)
+(-1.54125,0.25471)
+(-1.50750,0.29534)
+(-1.47375,0.33909)
+(-1.44000,0.38560)
+(-1.40625,0.43439)
+(-1.37250,0.48490)
+(-1.33875,0.53649)
+(-1.30500,0.58846)
+(-1.27125,0.64006)
+(-1.23750,0.69053)
+(-1.20375,0.73911)
+(-1.17000,0.78509)
+(-1.13625,0.82777)
+(-1.10250,0.86658)
+(-1.06875,0.90098)
+(-1.03500,0.93057)
+(-1.00125,0.95506)
+(-0.96750,0.97426)
+(-0.93375,0.98810)
+(-0.90000,0.99662)
+(-0.86625,0.99999)
+(-0.83250,0.99843)
+(-0.79875,0.99228)
+(-0.76500,0.98192)
+(-0.73125,0.96780)
+(-0.69750,0.95040)
+(-0.66375,0.93022)
+(-0.63000,0.90779)
+(-0.59625,0.88361)
+(-0.56250,0.85818)
+(-0.52875,0.83199)
+(-0.49500,0.80548)
+(-0.46125,0.77908)
+(-0.42750,0.75317)
+(-0.39375,0.72808)
+(-0.36000,0.70414)
+(-0.32625,0.68160)
+(-0.29250,0.66071)
+(-0.25875,0.64165)
+(-0.22500,0.62460)
+(-0.19125,0.60969)
+(-0.15750,0.59704)
+(-0.12375,0.58673)
+(-0.09000,0.57884)
+(-0.05625,0.57341)
+(-0.02250,0.57047)
+(0.01125,0.57005)
+(0.04500,0.57215)
+(0.07875,0.57675)
+(0.11250,0.58383)
+(0.14625,0.59334)
+(0.18000,0.60522)
+(0.21375,0.61938)
+(0.24750,0.63574)
+(0.28125,0.65414)
+(0.31500,0.67445)
+(0.34875,0.69646)
+(0.38250,0.71996)
+(0.41625,0.74470)
+(0.45000,0.77037)
+(0.48375,0.79665)
+(0.51750,0.82317)
+(0.55125,0.84951)
+(0.58500,0.87525)
+(0.61875,0.89990)
+(0.65250,0.92297)
+(0.68625,0.94395)
+(0.72000,0.96234)
+(0.75375,0.97760)
+(0.78750,0.98927)
+(0.82125,0.99687)
+(0.85500,1.00000)
+(0.88875,0.99831)
+(0.92250,0.99152)
+(0.95625,0.97946)
+(0.99000,0.96205)
+(1.02375,0.93931)
+(1.05750,0.91139)
+(1.09125,0.87855)
+(1.12500,0.84117)
+(1.15875,0.79971)
+(1.19250,0.75476)
+(1.22625,0.70697)
+(1.26000,0.65704)
+(1.29375,0.60573)
+(1.32750,0.55381)
+(1.36125,0.50201)
+(1.39500,0.45106)
+(1.42875,0.40163)
+(1.46250,0.35431)
+(1.49625,0.30959)
+(1.53000,0.26789)
+(1.56375,0.22948)
+(1.59750,0.19458)
+(1.63125,0.16326)
+(1.66500,0.13552)
+(1.69875,0.11126)
+(1.73250,0.09033)
+    };
+  \end{scope}
+\end{tikzpicture}
+\caption{A schematic one-dimensional illustration of how the electronic state can contribute to attraction between nuclei in the adiabatic approximation. The nuclear positions $r_1,r_2$ are fixed while solving for the electrons. The upper curve is a smooth electronic potential, and the lower curve illustrates a nodeless electronic ground-state wavefunction spread over the two wells. The panels use separate arbitrary vertical scales, and the potential is not a quantitative Coulomb potential. Its electronic ground-state energy $E_{e,r_i}$ depends on the nuclear positions and contributes to $U=V_{nn}+E_{e,r_i}$. Here $\xi$ is the electron coordinate; $U$ is instead a function of the nuclear positions.}
+\label{fig:fixed-nuclei-electronic-state}
+\end{latticefigure}
+% END ADDED LECTURE FIGURE: fixed-nuclei
+
+In Fig.~\ref{fig:fixed-nuclei-electronic-state}, the lower curve extends across both wells and does not vanish between $r_1$ and $r_2$. Thus the electron is shared between the two nuclei, with probability density $|\psi_e|^2$ also in the region between them. For the actual electron--nucleus interaction, negative electronic charge in this region attracts each positive nucleus toward the region between them. A shared electronic state can lower the electronic ground-state energy as the nuclei approach. Since $E_{e,\vec{r}_i}$ acts as a potential energy for the nuclei, this decrease can provide an attractive interaction. More precisely, for two nuclei separated by $R=|\vec{r}_2-\vec{r}_1|$, an interval where $E_e(R)$ decreases as $R$ decreases has $F_e=-dE_e/dR<0$, a force toward smaller separation. This electronic contribution competes with the direct nuclear repulsion $V_{nn}$; the total force follows from $U=V_{nn}+E_e$. The plot illustrates the shared electronic state at one fixed separation; determining the force requires the dependence of $E_e$ on $R$.\\
 
 \subsection{Harmonic Approximation and Elasticity Tensor}
 The last assumption that we impose here is that $\vec{r}_j = \vec{R}_j + \vec{u}_j$, where $\vec{R}_j$ is a lattice position that corresponds to a minimum of $U$, and $\vec{u}_j$ is the displacement from such lattice position. Taking $|\vec{u}_j|$ to be small, we can write 
@@ -1077,6 +1241,20 @@ M\omega^2 \epsilon^{\mu}(\vec{q}) = \sum_{\nu=1}^3\that{D}^{\mu\nu}(\vec{q}) \, 
 \end{align*}
 which will have a solution as $\that{D}^{\mu\nu}$ is Hermitian, with real frequencies for a stable equilibrium.\\
 
+For a general $1$-dimensional harmonic chain  with equal masses $M$, based on what we had from the previous discussion, we can write 
+\begin{align*}
+-M\omega^2 \epsilon^\alpha (q) = -\sum_{k,\beta} D_{jk}^{\alpha\beta} \epsilon^\beta (q) e^{iq(R_k - R_j)} = -\sum_{\beta}\that{D}^{\alpha\beta}(q)\, \epsilon^{\beta}(q)\,.
+\end{align*}
+Here we see some symmetries of 
+\begin{align*}
+\that{D}^{\alpha\beta}(q) = \sum_k D_{jk}^{\alpha\beta}\,e^{iq(R_k - R_j)}\,.
+\end{align*}
+Here $j,k$ label unit cells and $\alpha,\beta$ label displacement degrees of freedom within a cell; $R_j$ is the cell position. By lattice translation symmetry, $\that{D}^{\alpha\beta}$ is independent of $j$ after the sum over $k$. Furthermore, since we have $D_{jk}^{\alpha\beta} = D_{kj}^{\beta\alpha}$ and $D_{jk}^{\alpha\beta}$ is real, we see that 
+\begin{align*}
+\that{D}^{\alpha\beta}(q)^* = \that{D}^{\alpha\beta}(-q) = \that{D}^{\beta\alpha}(q)\,,
+\end{align*}
+showing that $\that{D}^{\alpha\beta}(q)$ is Hermitian. Using also $\that{D}^{\alpha\beta}(q+g)=\that{D}^{\alpha\beta}(q)$, if we are at a special $q_*$ such that $q_* = -q_* + g$ for $g \in \Lambda^*$, then $\that{D}^{\alpha\beta}(q_*)$ is real.
+
 \subsection{One-Dimensional Chain and Continuum Limit}
 As an example, let us consider a 1-dimensional chain with lattice constant $a$,
 \begin{align*}
@@ -1108,6 +1286,10 @@ D = \lambda \bmat{
 0 & & & & \ddots
 }
 \end{align*}
+For $R_n=na$, the plane-wave ansatz is
+\begin{align*}
+u_n = e^{-i\omega t} \, e^{iqR_n}\, \that{u}(q)\,,
+\end{align*}
 From here we can compute 
 \begin{align*}
 \that{D}(q) = \sum_k D_{jk}e^{iq(k-j)a} = 2\lambda - \lambda e^{iqa} - \lambda e^{-iqa} = 2\lambda (1 - \cos(qa))\,.
@@ -1127,6 +1309,33 @@ from which we obtain
 \right|\,.
 \end{align*}
 At small $q$, we have roughly $\omega \approx \sqrt{\lambda/M}a|q|$ which is linear in $q$. Furthermore, in general, not limited to this 1-dimensional example here, $u_j^\mu \propto e^{i\vec{q}\cdot \vec{R}_j}$ thus we see that $\vec{q}\to \vec{q}+\vec{b}$ for $\vec{b}\in \Lambda^*$ should give the same solution for $u_j^\mu$ as $\vec{q}$. Thus we have nonredundant wavevector labels for $u_j^\mu$  in the Brillouin zone in $(-\pi/a,\, \pi/a]$. \\
+
+% BEGIN ADDED LECTURE FIGURE: monatomic-dispersion
+\begin{latticefigure}
+\centering
+\begin{tikzpicture}[x=3.6cm,y=1.3cm,font=\small,>=Stealth]
+  \draw[->] (-1.17,0) -- (1.18,0) node[right] {$q$};
+  \draw[->] (0,0) -- (0,2.35) node[above] {$\omega/\sqrt{\lambda/M}$};
+  \foreach \x in {-1,1} {\draw[gray!65,dashed] (\x,0) -- (\x,2.15);}
+  \foreach \x in {-0.5,0.5} {\draw[cubeochre,dashed] (\x,0) -- (\x,2.15);}
+  \draw[cellblue,line width=0.95pt,domain=-1:0,samples=61,smooth]
+    plot (\x,{-2*sin(90*\x)});
+  \draw[cellblue,line width=0.95pt,domain=0:1,samples=61,smooth]
+    plot (\x,{2*sin(90*\x)});
+  \draw[black,densely dashed,domain=-0.38:0,samples=2] plot (\x,{-pi*\x});
+  \draw[black,densely dashed,domain=0:0.38,samples=2] plot (\x,{pi*\x});
+  \foreach \x/\lab in {-1/{-\pi/a},-0.5/{-\pi/(2a)},0/{0},0.5/{\pi/(2a)},1/{\pi/a}} {
+    \draw (\x,0) -- (\x,-0.045);
+    \node[below,font=\footnotesize] at (\x,-0.045) {$\lab$};
+  }
+  \draw (-0.025,2) -- (0.025,2) node[right] {$2$};
+  \node[anchor=west] at (0.42,0.72) {linear at small $|q|$};
+  \draw[->,thin] (0.43,0.9) -- (0.24,0.75);
+\end{tikzpicture}
+\caption{The dispersion of the chain with one site per unit cell. The zero-frequency mode at $q=0$ is a uniform translation of the chain. The dashed black lines show the small-$|q|$ form $\omega\approx a\sqrt{\lambda/M}|q|$. The first Brillouin zone has edges at $\pm\pi/a$; the inner dashed lines at $\pm\pi/(2a)$ show the edges used when the size of the unit cell is doubled, discussed in the next example.}
+\label{fig:monatomic-chain-dispersion}
+\end{latticefigure}
+% END ADDED LECTURE FIGURE: monatomic-dispersion
 
 We can have a continuum limit for the $1$-dimensional problem that we just discussed. Consider the limit where $a\to 0$ but $\eta = a^2\lambda$ and $M$ are fixed, then 
 \begin{align*}
@@ -1149,6 +1358,35 @@ M\ddot{u}_j = -\lambda_2 (u_j - v_j) - \lambda_1(u_j - v_{j-1})
 \end{align*}
 for $u_j$ and a similar one for $v_j$. \\
 
+% BEGIN ADDED LECTURE FIGURE: alternating-spring-chain
+\begin{latticefigure}
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small,>=Stealth]
+  \fill[cellblue!6] (2.4,-0.52) rectangle (5.6,0.85);
+  \draw[cellblue!55,dashed] (2.4,-0.52) -- (2.4,0.85);
+  \draw[cellblue!55,dashed] (5.6,-0.52) -- (5.6,0.85);
+  \node at (4,0.68) {cell $j$};
+  \draw[dashed] (-0.7,0) -- (-0.12,0);
+  \draw[dashed] (8.12,0) -- (8.7,0);
+  \foreach \l/\r/\spring/\col in {0/1.6/2/cellblue,1.6/3.2/1/cubeochre,3.2/4.8/2/cellblue,4.8/6.4/1/cubeochre,6.4/8/2/cellblue} {
+    \draw[\col,line width=0.7pt,decorate,decoration={coil,aspect=0.4,segment length=3.2mm,amplitude=1.5mm,pre length=1.5mm,post length=1.5mm}]
+      ({\l+0.13},0) -- ({\r-0.13},0);
+    \node at ({(\l+\r)/2},0.32) {$\lambda_\spring$};
+  }
+  \foreach \x/\lab in {0/u_{j-1},1.6/v_{j-1},3.2/u_j,4.8/v_j,6.4/u_{j+1},8/v_{j+1}} {
+    \filldraw[fill=white,draw=black,line width=0.7pt] (\x,0) circle (0.12cm);
+    \node[below] at (\x,-0.17) {$\lab$};
+  }
+  \draw[<->] (3.2,-0.77) -- (4.8,-0.77) node[midway,fill=white,inner sep=2pt] {$a$};
+  \draw[<->] (3.2,-1.16) -- (6.4,-1.16) node[midway,fill=white,inner sep=2pt] {$2a$};
+  \foreach \x in {3.2,4.8,6.4} {\draw[gray!65,thin] (\x,-0.59) -- (\x,-1.28);}
+  \node[anchor=east] at (8.65,0.73) {all masses $M$};
+\end{tikzpicture}
+\caption{The chain with two sites per unit cell, drawn at equilibrium. The labels $u_j,v_j$ denote displacements of the two sites in cell $j$. To match $U$ above, $\lambda_2$ connects the sites within a cell and $\lambda_1$ connects adjacent cells. Neighbouring sites are separated by $a$, and equivalent cells are separated by $2a$.}
+\label{fig:alternating-spring-chain}
+\end{latticefigure}
+% END ADDED LECTURE FIGURE: alternating-spring-chain
+
 Let $\vec{R}_j $ be the positions on the Bravais lattice of symmetries, we can write the plane-wave solution assumption, 
 \begin{align*}
 u_j = \epsilon_u e^{i\vec{q}\cdot \vec{R}_j} e^{-i\omega t}\,,\qquad
@@ -1167,7 +1405,147 @@ The matrix (equal to $-\that{D}(q)$ here) is Hermitian, and thus we can solve fo
 \begin{align*}
 \omega_{\pm}^2 = \frac{1}{M}\left( \lambda_1 + \lambda_2 \pm \left|\lambda_2 + \lambda_1 e^{-iq2a}\right|\right)
 \end{align*}
-If $\lambda_1 = \lambda_2$, the band structure in the new Brillouin zone $(-\pi/(2a), \pi/(2a)]$ is obtained from the one that we had in the previous example by ``folding." While for $\lambda_1 \neq \lambda_2$, there is a gap in squared frequencies between the two bands at $q = -\pi/(2a)$ and at $q = \pi/(2a)$ of the size $2|\lambda_2 - \lambda_1|/M$. 
+If $\lambda_1 = \lambda_2$, the band structure in the new Brillouin zone $(-\pi/(2a), \pi/(2a)]$ is obtained from the one that we had in the previous example by ``folding." While for $\lambda_1 \neq \lambda_2$, there is a gap in squared frequencies between the two bands at $q = -\pi/(2a)$ and at $q = \pi/(2a)$ of the size $2|\lambda_2 - \lambda_1|/M$. \\
+
+For example, in the case where the size of the unit cell is $2a$ in the $1$-dimensional example, the matrix at $q_*=\pi/(2a)$ is real because $q_*=-q_*+\pi/a$. Thus we can write 
+\begin{align*}
+\that{D} ( \pi/(2a)) = \mu \mathbb{I} + \nu \bmat{0 & 1 \\ 1 & 0} + \kappa \bmat{1 & 0 \\ 0 & -1}\,,
+\end{align*}
+where the gap in squared frequencies that we have discussed for the dispersion curve at the edge of the Brillouin zone has the size proportional to $\sqrt{\nu^2 + \kappa^2}$.
+
+% BEGIN ADDED LECTURE FIGURE: folded-and-gapped-bands
+\begin{latticefigure}
+\centering
+\begin{minipage}[t]{0.48\linewidth}
+\centering
+\begin{tikzpicture}[x=4.05cm,y=1.04cm,font=\small,>=Stealth]
+  \draw[->] (-0.65,0) -- (0.65,0) node[right] {$q$};
+  \draw[->] (-0.65,0) -- (-0.65,2.75);
+  \node[above] at (0,2.78) {$\omega/\sqrt{\lambda_1/M}$};
+  \foreach \x in {-0.5,0.5} {\draw[gray!65,dashed] (\x,0) -- (\x,2.55);}
+  \draw[cubeochre,line width=0.95pt,domain=-0.5:0.5,samples=101,smooth]
+    plot (\x,{2*cos(90*\x)});
+  \draw[cellblue,line width=0.95pt,domain=-0.5:0,samples=51,smooth]
+    plot (\x,{-2*sin(90*\x)});
+  \draw[cellblue,line width=0.95pt,domain=0:0.5,samples=51,smooth]
+    plot (\x,{2*sin(90*\x)});
+  \foreach \x/\lab in {-0.5/{-\pi/(2a)},0/{0},0.5/{\pi/(2a)}} {
+    \draw (\x,0) -- (\x,-0.05);
+    \node[below,font=\footnotesize] at (\x,-0.05) {$\lab$};
+  }
+  \draw (-0.67,2) -- (-0.63,2) node[left=2pt] {$2$};
+  \node at (0.08,0.8) {$\omega_-$};
+  \node at (0.08,2.25) {$\omega_+$};
+  \node at (0,-0.68) {(a) $\lambda_2=\lambda_1$};
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\linewidth}
+\centering
+\begin{tikzpicture}[x=4.05cm,y=1.04cm,font=\small,>=Stealth]
+  \draw[->] (-0.65,0) -- (0.65,0) node[right] {$q$};
+  \draw[->] (-0.65,0) -- (-0.65,2.75);
+  \node[above] at (0,2.78) {$\omega/\sqrt{\lambda_1/M}$};
+  \foreach \x in {-0.5,0.5} {\draw[gray!65,dashed] (\x,0) -- (\x,2.55);}
+  \draw[cubeochre,line width=0.95pt,domain=-0.5:0.5,samples=101,smooth]
+    plot (\x,{sqrt(3+sqrt(5+4*cos(360*\x)))});
+  \draw[cellblue,line width=0.95pt,domain=-0.5:0,samples=61,smooth]
+    plot (\x,{sqrt(max(0,3-sqrt(5+4*cos(360*\x))))});
+  \draw[cellblue,line width=0.95pt,domain=0:0.5,samples=61,smooth]
+    plot (\x,{sqrt(max(0,3-sqrt(5+4*cos(360*\x))))});
+  \draw[<->,line width=0.7pt] (0.5,{sqrt(2)}) -- (0.5,2)
+    node[midway,left,fill=white,inner sep=1pt] {$\Delta\omega$};
+  \foreach \x/\lab in {-0.5/{-\pi/(2a)},0/{0},0.5/{\pi/(2a)}} {
+    \draw (\x,0) -- (\x,-0.05);
+    \node[below,font=\footnotesize] at (\x,-0.05) {$\lab$};
+  }
+  \draw (-0.67,2) -- (-0.63,2) node[left=2pt] {$2$};
+  \node at (0.08,0.85) {$\omega_-$};
+  \node at (0.08,2.18) {$\omega_+$};
+  \node at (0,-0.68) {(b) $\lambda_2=2\lambda_1$};
+\end{tikzpicture}
+\end{minipage}
+\caption{Folding and opening a gap in the Brillouin zone of the $2a$ cell. (a) For equal springs, folding the single-chain dispersion gives two branches that meet at the zone edges. (b) Unequal springs separate the branches there; $\lambda_2=2\lambda_1$ is an example. Both panels show $\omega$, not $\omega^2$. For positive spring constants, the frequency gap at either edge is
+$\Delta\omega=\sqrt{2\max(\lambda_1,\lambda_2)/M}-\sqrt{2\min(\lambda_1,\lambda_2)/M}$,
+whereas the squared-frequency gap is $\omega_+^2-\omega_-^2=2|\lambda_2-\lambda_1|/M$.}
+\label{fig:folded-and-gapped-dispersion}
+\end{latticefigure}
+% END ADDED LECTURE FIGURE: folded-and-gapped-bands
+
+\newpage
+\section{Quantum Theory of Harmonic Crystal}
+Each normal mode of the harmonic crystal behaves as an independent harmonic oscillator. Quantizing these modes gives the quantum oscillators as we will discuss below, with frequencies determined by the dynamical matrix.\\
+
+Starting by recalling the classical equipartition theorem, which says that for a harmonic oscillator in $1$-dimension, 
+\begin{align*}
+\langle\langle E \rangle\rangle = \langle \langle \frac{p^2}{2m} + \frac{1}{2}m\omega^2 x^2\rangle\rangle = k_{\text{B}}T\,.
+\end{align*}
+For a $3$-dimensional crystal with $N$ atoms, we thus have 
+\begin{align*}
+\langle\langle E\rangle\rangle = 3N k_{\text{B}}T \,,
+\end{align*}
+from which we obtain the heat capacity, 
+\begin{align*}
+C_V = \frac{\pd \langle\langle E\rangle\rangle}{\pd T} = 3N k_{\text{B}}\,,
+\end{align*}
+which is independent of everything other than the number of atoms, and thus is said to be universal. Experimentally, for many solids, this is a good estimation for $T = 200\sim 500$\,K, but one will observe that $C_V \to 0$ as $T \to 0$. For a universal ($T$-independent) $C_V = 3Nk_{\text{B}}$, there is another theoretical problem that the entropy will diverge to negative infinity logarithmically as $T_1 \to 0$, 
+\begin{align*}
+S(T_2) - S(T_1) = \int_{T_1}^{T_2} \frac{dT}{T}\, C_V(T)\,.
+\end{align*} 
+
+
+The quantum mechanical solution to the problem described above is that if we have a single quantum harmonic oscillator of frequency $\omega$, when $k_{\text{B}}T \ll \hbar\omega$, then $C_{V}$ approaches zero exponentially quickly as $T \to 0$. In this case, let us consider a single quantum harmonic oscillator of frequency $\omega$. For each $n \geq 0$, we have one eigenstate $|n\rangle$ of energy $(n+1/2)\hbar\omega$. Consider the partition function at $\beta = 1/(k_{\text{B}}T)$, 
+\begin{align*}
+Z(\beta) = \sum_{n=0}^\infty \exp\left(
+-\beta \left(n+\frac{1}{2}\right) \hbar\omega
+\right) = e^{-\beta \hbar\omega/2} \sum_{n=0}^\infty \left(
+e^{-\beta\hbar\omega}
+\right)^n = \frac{e^{-\beta \hbar\omega/2}}{1 - e^{-\beta\hbar\omega}}\,.
+\end{align*}
+From here we can compute the average energy
+\begin{align*}
+\langle\langle E \rangle\rangle = -\frac{1}{Z}\frac{\pd Z}{\pd \beta} = \hbar\omega\left(\frac{1}{2} + 
+\frac{1}{e^{\beta \hbar\omega}-1}
+\right)
+\end{align*}
+Notice that, the average of $n$ is $\langle\langle E \rangle\rangle / (\hbar\omega) - 1/2$, thus the second term in $\langle\langle E\rangle\rangle$, divided by $\hbar\omega$, is the Bose-Einstein distribution in this case. Now we see that 
+\begin{align*}
+C_{V, \omega}(T) = \frac{\pd \langle\langle E\rangle\rangle}{\pd T} = k_{\text{B}} \left( 
+\beta \hbar\omega
+\right)^2 \frac{e^{-\beta \hbar\omega}}{(1 - e^{-\beta \hbar\omega})^2}\,.
+\end{align*}
+As $T \to 0$, we have $\beta \to \infty$, we will see that $C_{V,\omega}(T) \to 0$ exponentially fast with $ \hbar\omega/(k_{\text{B}}T)$. On the other hand, as $T \to \infty$, we have $\beta \to 0$, one can show that $C_{V,\omega}(T) \to k_{\text{B}}$. This agrees with the classical theory where $C_V = 3N k_{\text{B}}$ for $N$ atoms in $3$ dimensions: Here $C_{V,\omega}$ is the heat capacity of one normal mode, while $C_V$ is the sum over all $3N$ modes; adding their contributions in the classical regime ($T\to\infty$) $k_{\text{B}}$ gives $3Nk_{\text{B}}$.
+
+\subsection{Debye theory for $C_V$}
+Debye theory estimates the temperature dependence of the lattice heat capacity by summing the quantum contributions of acoustic modes.\\
+
+Here we study only the acoustic modes, using a common speed $v_s$ for simplicity, 
+\begin{align*}
+\omega = v_s |\vec{q}|\,,
+\end{align*} 
+where $v_s$ is called the speed of sound, and we have seen one of these examples in the $1$-dimensional chain discussed above, in the limit of $q \to 0$. In $C_{V,\omega(\vec{q})}$, we evaluate the single-mode heat capacity at the mode's frequency. Polarization is the direction of atomic motion: one acoustic mode moves parallel to $\vec{q}$ and two move in independent perpendicular directions. With a common $v_s$, their contributions are equal, giving the factor $3$. We would like to have a heat capacity of the form 
+\begin{align*}
+C_V = 3\left(\frac{L}{2\pi}\right)^3 \int_{|\vec{q}|\leq k_{\text{D}}} d^3q\, C_{V,\omega(\vec{q})} (T)\,,
+\end{align*}
+where $L^3$ is the crystal volume and we should normalize the integral so that 
+\begin{align*}
+\left(\frac{L}{2\pi}\right)^3 \int_{|\vec{q}|\leq k_{\text{D}}} d^3q =\left(\frac{L}{2\pi}\right)^3 \frac{4\pi}{3}k_{\text{D}}^3 = N
+\end{align*}
+for $k_{\text{D}}$ being what we call the UV cutoff, giving $N$ modes per polarization and $3N$ modes in total. If $k_{\text{B}}T \ll \hbar v_s k_{\text{D}}$, this is reasonable because modes near the cutoff has excitation energy approximately
+$\hbar\omega_{\mathrm D}=\hbar v_s k_{\mathrm D}$, which is difficult to excite thermally, so its heat-capacity contribution is exponentially small. Defining $\hbar v_s k_{\text{D}} = \hbar\omega_{\text{D}}$, $\omega_{\text{D}}$ is called the Debye frequency, and the corresponding Debye temperature is
+\begin{align*}
+T_\text{D} = \frac{\hbar v_s k_{\text{D}}}{k_{\text{B}}}\,,
+\end{align*}
+where $k_{\text{D}}$ is obtained from the mode-counting condition above. \\
+
+With a crude analysis for $T\ll T_{\text{D}}$, if $\hbar\omega \leq k_{\text{B}}T$, then we have contribution $C_{V,\omega}(T) \approx k_{\text{B}}$, and if $\hbar\omega > k_{\text{B}} T$, we have contribution $C_{V,\omega}(T) \approx 0$, thus we can write 
+\begin{align*}
+C_V &\approx 3k_{\text{B}}\left(\frac{L}{2\pi}\right)^3 \int_{|\vec{q}| \leq k_{\text{B}}T/(\hbar v_s)} d^3q 
+= 3Nk_{\text{B}}\frac{\text{volume of the ball of radius }k_{\text{B}}T/(\hbar v_s)}{\text{volume of ball of radius } k_{\text{D}}}\,.
+\end{align*}
+
+
+
+
 
 
 \end{document}
